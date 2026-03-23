@@ -1,6 +1,6 @@
 import { readFile, readdir } from 'node:fs/promises'
 import { join } from 'node:path'
-import { projectOverrides, siteConfig } from '~~/shared/site'
+import { projectOverrides } from '~~/shared/site'
 import type { ProjectSection, ProjectSummary } from '~~/shared/types'
 
 interface GithubRepository {
@@ -142,14 +142,14 @@ const deriveCategories = (repository: GithubRepository, info: PortfolioInfo | nu
   return section === 'tools' ? ['Tools / Plugins'] : ['Projects']
 }
 
-const deriveSection = (repository: GithubRepository, info: PortfolioInfo | null, overrideFeatured: boolean) => {
+const deriveSection = (repository: GithubRepository, info: PortfolioInfo | null) => {
   const topics = lowerTopics(repository)
 
   if (info?.section) {
     return info.section
   }
 
-  if (info?.featured === true || overrideFeatured || topics.includes('featured-project')) {
+  if (info?.featured === true || topics.includes('featured-project')) {
     return 'featured' as const
   }
 
@@ -346,8 +346,7 @@ export default defineEventHandler(async (event) => {
           ? override.stack
           : ([...(repository.topics || []), repository.language].filter(Boolean) as string[])
 
-      const overrideFeatured = override.featured ?? siteConfig.featuredRepos.includes(repository.name)
-      const section = deriveSection(repository, info, overrideFeatured)
+      const section = deriveSection(repository, info)
       const categories = deriveCategories(repository, info, stack, section)
       const showGithubLink = info?.showGithubLink ?? !repository.private
 

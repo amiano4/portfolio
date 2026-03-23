@@ -52,8 +52,7 @@ export const siteConfig = {
       name: 'GitHub Copilot / Cursor',
       purpose: 'Inline acceleration for repetitive implementation work'
     }
-  ] satisfies AiTool[],
-  featuredRepos: ['portfolio', 'aegis-mailer', 'monorepo-template', 'laravel-vue-docker-based-boilerplate', 'jsflow']
+  ] satisfies AiTool[]
 }
 
 export const projectOverrides: Record<string, ProjectOverride> = {
