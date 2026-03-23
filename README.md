@@ -167,6 +167,7 @@ If `.portfolio/info.json` exists, it can override fields like:
 - role
 - categories
 - stack
+- section
 - highlights
 - snapshots
 - visibility-related presentation fields

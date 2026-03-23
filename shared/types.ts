@@ -1,4 +1,5 @@
 export type PortfolioMode = 'product' | 'developer'
+export type ProjectSection = 'featured' | 'projects' | 'tools'
 
 export interface WorkMetric {
   label: string
@@ -39,6 +40,7 @@ export interface ProjectSummary {
   updatedAt: string
   topics: string[]
   categories: string[]
+  section: ProjectSection
   featured: boolean
   role?: string
   stack: string[]

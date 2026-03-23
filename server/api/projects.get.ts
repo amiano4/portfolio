@@ -1,7 +1,7 @@
-import { access, readFile, readdir } from 'node:fs/promises'
+import { readFile, readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { projectOverrides, siteConfig } from '~~/shared/site'
-import type { ProjectSummary } from '~~/shared/types'
+import type { ProjectSection, ProjectSummary } from '~~/shared/types'
 
 interface GithubRepository {
   name: string
@@ -33,6 +33,7 @@ interface PortfolioInfo {
   showGithubLink?: boolean
   stack?: string[]
   categories?: string[]
+  section?: ProjectSection
   highlights?: string[]
   snapshots?: string[]
 }
@@ -45,35 +46,17 @@ interface RepoPortfolioMeta {
 const assetExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif']
 const localPortfolioRoot = join(process.cwd(), '.portfolio')
 
+const toolTopics = ['tool', 'plugin', 'package', 'template', 'boilerplate', 'cli', 'automation', 'tooling', 'devtools']
+const projectTopics = ['project', 'web-app', 'website', 'mobile', 'android', 'ios', 'desktop', 'iot']
+
 const categoryMatchers: Array<{ category: string; terms: string[] }> = [
-  {
-    category: 'Mobile',
-    terms: ['quasar', 'capacitor', 'android', 'ios', 'mobile', 'mobile-app', 'cordova', 'react-native', 'flutter']
-  },
-  {
-    category: 'Desktop',
-    terms: ['electron', 'tauri', 'desktop', 'desktop-app']
-  },
-  {
-    category: 'IoT',
-    terms: ['iot', 'arduino', 'esp32', 'raspberry', 'embedded', 'sensor', 'mqtt', 'microcontroller']
-  },
-  {
-    category: 'Web',
-    terms: ['laravel', 'vue', 'symfony', 'nuxt', 'react', 'next', 'web', 'api', 'dashboard', 'portal', 'website']
-  },
-  {
-    category: 'Internal tools',
-    terms: ['internal', 'admin', 'erp', 'pos', 'inventory', 'workflow', 'operations', 'backoffice', 'management']
-  },
-  {
-    category: 'Tooling',
-    terms: ['cli', 'automation', 'tooling', 'devtools', 'script', 'command-line']
-  },
-  {
-    category: 'OSS / Package',
-    terms: ['library', 'package', 'plugin', 'toolkit', 'boilerplate', 'template', 'starter']
-  }
+  { category: 'Web', terms: ['web-app', 'website', 'laravel', 'vue', 'symfony', 'nuxt', 'react', 'next', 'portal', 'dashboard', 'api'] },
+  { category: 'Mobile', terms: ['mobile', 'android', 'ios', 'quasar', 'capacitor', 'cordova', 'react-native', 'flutter'] },
+  { category: 'Desktop', terms: ['desktop', 'electron', 'tauri'] },
+  { category: 'IoT', terms: ['iot', 'arduino', 'esp32', 'raspberry', 'embedded', 'sensor', 'mqtt', 'microcontroller'] },
+  { category: 'Internal tools', terms: ['internal-tool', 'admin', 'erp', 'pos', 'inventory', 'workflow', 'operations', 'backoffice', 'management'] },
+  { category: 'Tools / Plugins', terms: ['tool', 'plugin', 'package', 'template', 'boilerplate', 'cli', 'automation', 'tooling', 'devtools'] },
+  { category: 'Capstone', terms: ['capstone'] }
 ]
 
 const buildGithubHeaders = (token?: string) => {
@@ -113,20 +96,22 @@ const parseGithubFileContent = (payload: { content?: string; encoding?: string }
   return payload.content
 }
 
-const normalizeCategoryList = (values: string[]) =>
-  [...new Set(values.map((value) => value.trim()).filter(Boolean))]
+const normalizeList = (values: string[]) => [...new Set(values.map((value) => value.trim()).filter(Boolean))]
 
-const deriveCategories = (repository: GithubRepository, info: PortfolioInfo | null, stack: string[]) => {
+const lowerTopics = (repository: GithubRepository) => (repository.topics || []).map((topic) => topic.toLowerCase())
+
+const deriveCategories = (repository: GithubRepository, info: PortfolioInfo | null, stack: string[], section: ProjectSection) => {
   if (info?.categories?.length) {
-    return normalizeCategoryList(info.categories)
+    return normalizeList(info.categories)
   }
 
+  const topics = lowerTopics(repository)
   const haystack = [
     repository.name,
     repository.description || '',
     repository.language || '',
     repository.homepage || '',
-    ...(repository.topics || []),
+    ...topics,
     ...stack
   ]
     .join(' ')
@@ -136,8 +121,12 @@ const deriveCategories = (repository: GithubRepository, info: PortfolioInfo | nu
     .filter(({ terms }) => terms.some((term) => haystack.includes(term)))
     .map(({ category }) => category)
 
+  if (section === 'tools' && !matched.includes('Tools / Plugins')) {
+    matched.unshift('Tools / Plugins')
+  }
+
   if (matched.length) {
-    return normalizeCategoryList(matched)
+    return normalizeList(matched)
   }
 
   const language = (repository.language || '').toLowerCase()
@@ -150,7 +139,29 @@ const deriveCategories = (repository: GithubRepository, info: PortfolioInfo | nu
     return ['Mobile']
   }
 
-  return ['Software']
+  return section === 'tools' ? ['Tools / Plugins'] : ['Projects']
+}
+
+const deriveSection = (repository: GithubRepository, info: PortfolioInfo | null, overrideFeatured: boolean) => {
+  const topics = lowerTopics(repository)
+
+  if (info?.section) {
+    return info.section
+  }
+
+  if (info?.featured === true || overrideFeatured || topics.includes('featured-project')) {
+    return 'featured' as const
+  }
+
+  if (topics.some((topic) => toolTopics.includes(topic))) {
+    return 'tools' as const
+  }
+
+  if (topics.some((topic) => projectTopics.includes(topic))) {
+    return 'projects' as const
+  }
+
+  return 'projects' as const
 }
 
 const isLocalRepoOverlay = (repository: GithubRepository, username: string) =>
@@ -335,7 +346,9 @@ export default defineEventHandler(async (event) => {
           ? override.stack
           : ([...(repository.topics || []), repository.language].filter(Boolean) as string[])
 
-      const categories = deriveCategories(repository, info, stack)
+      const overrideFeatured = override.featured ?? siteConfig.featuredRepos.includes(repository.name)
+      const section = deriveSection(repository, info, overrideFeatured)
+      const categories = deriveCategories(repository, info, stack, section)
       const showGithubLink = info?.showGithubLink ?? !repository.private
 
       return {
@@ -355,7 +368,8 @@ export default defineEventHandler(async (event) => {
         updatedAt: repository.updated_at,
         topics: [...(repository.topics || []), ...categories],
         categories,
-        featured: info?.featured ?? override.featured ?? siteConfig.featuredRepos.includes(repository.name),
+        section,
+        featured: section === 'featured',
         role: info?.role || override.role,
         stack,
         highlights: info?.highlights || override.highlights || [],
@@ -372,9 +386,10 @@ export default defineEventHandler(async (event) => {
       const rightInfo = portfolioMetaByRepo.get(right.fullName)?.info
       const leftOrder = leftInfo?.order ?? projectOverrides[left.repoName]?.order ?? Number.MAX_SAFE_INTEGER
       const rightOrder = rightInfo?.order ?? projectOverrides[right.repoName]?.order ?? Number.MAX_SAFE_INTEGER
+      const sectionRank = { featured: 0, projects: 1, tools: 2 }
 
-      if (left.featured !== right.featured) {
-        return left.featured ? -1 : 1
+      if (left.section !== right.section) {
+        return sectionRank[left.section] - sectionRank[right.section]
       }
 
       if (leftOrder !== rightOrder) {
@@ -392,7 +407,7 @@ export default defineEventHandler(async (event) => {
       return +new Date(right.updatedAt) - +new Date(left.updatedAt)
     })
 
-  const filteredProjects = featuredOnly ? projects.filter((project) => project.featured) : projects
+  const filteredProjects = featuredOnly ? projects.filter((project) => project.section === 'featured') : projects
 
   if (limit > 0) {
     return filteredProjects.slice(0, limit)
