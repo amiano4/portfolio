@@ -19,14 +19,15 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="shell py-12 sm:py-16">
-    <article class="mx-auto max-w-3xl">
-      <NuxtLink to="/blog" class="text-sm font-medium text-[color:var(--brand)]">← Back to blog</NuxtLink>
+  <div class="shell py-10 sm:py-14">
+    <article class="mx-auto max-w-4xl">
+      <NuxtLink to="/blog" class="link-inline">← Back to blog</NuxtLink>
 
-      <header class="mt-6 surface rounded-[2rem] p-8 sm:p-10">
+      <header class="frame mt-6 rounded-[2rem] p-8 sm:p-10 lg:p-12">
         <p class="eyebrow">Blog post</p>
-        <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{{ post?.title }}</h1>
-        <p class="mt-4 text-base leading-8 text-muted">{{ post?.description }}</p>
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">{{ post?.title }}</h1>
+        <p class="section-copy mt-5 max-w-3xl">{{ post?.description }}</p>
+
         <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-muted">
           <span>{{ post?.date ? formatDate(post.date) : '' }}</span>
           <span>•</span>
@@ -38,7 +39,7 @@ useSeoMeta({
         </div>
       </header>
 
-      <div class="surface mt-8 rounded-[2rem] p-8 sm:p-10">
+      <div class="surface mt-8 rounded-[2rem] p-8 sm:p-10 lg:p-12">
         <ContentRenderer v-if="post" :value="post" class="prose-custom" />
       </div>
     </article>
