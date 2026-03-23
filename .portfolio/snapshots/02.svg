@@ -1,0 +1,25 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1000" rx="36" fill="#09101B"/>
+  <rect x="52" y="52" width="1496" height="896" rx="30" stroke="#1E2F4D"/>
+  <rect x="84" y="124" width="1432" height="160" rx="28" fill="#0F1727" stroke="#243551"/>
+  <rect x="84" y="324" width="460" height="568" rx="28" fill="#0F1727" stroke="#243551"/>
+  <rect x="572" y="324" width="460" height="568" rx="28" fill="#0F1727" stroke="#243551"/>
+  <rect x="1060" y="324" width="456" height="568" rx="28" fill="#0F1727" stroke="#243551"/>
+  <rect x="126" y="172" width="260" height="24" rx="12" fill="#EEF3FB"/>
+  <rect x="126" y="220" width="620" height="12" rx="6" fill="#53647E"/>
+  <rect x="126" y="360" width="180" height="18" rx="9" fill="#EEF3FB"/>
+  <rect x="126" y="402" width="360" height="180" rx="20" fill="#111D30" stroke="#263754"/>
+  <rect x="126" y="612" width="360" height="218" rx="20" fill="url(#g2)"/>
+  <rect x="614" y="360" width="180" height="18" rx="9" fill="#EEF3FB"/>
+  <rect x="614" y="402" width="360" height="428" rx="20" fill="#111D30" stroke="#263754"/>
+  <rect x="1100" y="360" width="180" height="18" rx="9" fill="#EEF3FB"/>
+  <rect x="1100" y="402" width="376" height="120" rx="20" fill="#111D30" stroke="#263754"/>
+  <rect x="1100" y="550" width="376" height="120" rx="20" fill="#111D30" stroke="#263754"/>
+  <rect x="1100" y="698" width="376" height="132" rx="20" fill="#111D30" stroke="#263754"/>
+  <defs>
+    <radialGradient id="g2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(306 720) rotate(90) scale(158 180)">
+      <stop stop-color="#77A2FF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#111D30"/>
+    </radialGradient>
+  </defs>
+</svg>

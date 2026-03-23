@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatDate } from '~/utils/format'
 import { siteConfig } from '~~/shared/site'
 
 useSeoMeta({
@@ -13,12 +14,15 @@ const mode = usePortfolioMode()
 const { data: projects, pending: projectsPending } = await useFetch('/api/projects', {
   query: {
     featured: true,
-    limit: 3
+    limit: 4
   },
   default: () => []
 })
 
 const { data: blogEntries } = await useAsyncData('blog-home', () => queryCollection('blog').all())
+
+const featuredProject = computed(() => projects.value[0])
+const archiveProjects = computed(() => projects.value.slice(1, 4))
 
 const featuredPosts = computed(() => {
   const entries = [...(blogEntries.value || [])]
@@ -29,124 +33,205 @@ const featuredPosts = computed(() => {
     .slice(0, 3)
 })
 
-const modeNotes = computed(() => {
-  if (mode.value === 'developer') {
-    return ['Architecture signals stay visible', 'Repository highlights get more emphasis', 'Writing reads closer to engineering notes']
-  }
-
-  return ['Cleaner framing for recruiters and founders', 'Impact and product quality come first', 'Technical depth stays available, not loud']
-})
+const proofItems = [
+  { title: 'Core stack', text: 'Laravel, Vue, Symfony' },
+  { title: 'Workflow', text: 'GitHub-backed and AI-assisted' },
+  { title: 'Focus', text: 'Product quality and maintainability' }
+]
 </script>
 
 <template>
-  <div class="pb-8 sm:pb-12">
-    <section class="shell pt-10 sm:pt-14">
-      <div class="frame rounded-[2rem] p-8 sm:p-10 lg:p-12">
-        <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-          <div>
-            <p class="eyebrow">Full-stack engineer · Laravel / Vue · AI-assisted workflows</p>
-            <h1 class="hero-title mt-6 max-w-5xl">Elegant products. Clean systems. Fast delivery.</h1>
-            <p class="lead mt-6 max-w-2xl">{{ siteConfig.intro }}</p>
+  <div>
+    <section class="shell">
+      <div class="hero-shell">
+        <div class="hero-copy">
+          <p class="eyebrow">Almario</p>
+          <h1 class="hero-title mt-6">Full-stack engineer.</h1>
+          <p class="hero-summary">PHP / JavaScript / Systems Architecture</p>
 
-            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-              <NuxtLink to="/projects" class="button-primary">View projects</NuxtLink>
-              <NuxtLink to="/blog" class="button-secondary">Read the blog</NuxtLink>
-            </div>
-
-            <div class="mt-8 flex flex-wrap gap-3 text-sm text-muted">
-              <span class="chip">{{ mode === 'product' ? 'Product mode' : 'Developer mode' }}</span>
-              <span class="chip">{{ siteConfig.location }}</span>
-              <span class="chip">Cmd/Ctrl + K</span>
-            </div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <NuxtLink to="/projects" class="button-primary">View projects</NuxtLink>
+            <NuxtLink to="/blog" class="button-secondary">Read notes</NuxtLink>
           </div>
 
-          <aside class="panel rounded-[1.75rem] p-6 sm:p-7">
-            <p class="eyebrow">At a glance</p>
-            <div class="stat-list mt-4">
-              <div v-for="metric in siteConfig.metrics" :key="metric.label" class="stat-item">
-                <div>
-                  <p class="text-sm font-medium text-[color:var(--text)]">{{ metric.label }}</p>
-                  <p class="mt-1 text-xs text-muted">{{ metric.note }}</p>
-                </div>
-                <strong class="max-w-[11rem] text-right">{{ metric.value }}</strong>
+          <div class="proof-line">
+            <div v-for="item in proofItems" :key="item.title">
+              <strong>{{ item.title }}</strong>
+              <span>{{ item.text }}</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-rail">
+          <div class="signal-board">
+            <div class="relative z-10 flex items-center justify-between gap-4">
+              <div>
+                <p class="mono">Current framing</p>
+                <h2 class="mt-3 text-3xl font-semibold tracking-tight">{{ mode === 'product' ? 'Product mode' : 'Developer mode' }}</h2>
+              </div>
+              <span class="signal-badge">{{ siteConfig.location }}</span>
+            </div>
+
+            <div class="status-stack relative z-10">
+              <div class="status-row">
+                <strong>Default stack</strong>
+                <span>Laravel · Vue</span>
+              </div>
+              <div class="status-row">
+                <strong>Execution</strong>
+                <span>Fast, deliberate</span>
+              </div>
+              <div class="status-row">
+                <strong>Workflow</strong>
+                <span>GitHub + AI tooling</span>
               </div>
             </div>
 
-            <div class="mt-6 rounded-[1.35rem] border hairline p-4">
-              <p class="text-xs font-semibold uppercase tracking-[0.24em] text-muted">Current framing</p>
-              <ul class="mt-3 space-y-2 text-sm text-muted">
-                <li v-for="note in modeNotes" :key="note">• {{ note }}</li>
-              </ul>
+            <div class="micro-grid relative z-10 mt-6">
+              <div class="micro-card">
+                <p class="mono">01</p>
+                <strong>Build</strong>
+                <span>Product-grade delivery</span>
+              </div>
+              <div class="micro-card">
+                <p class="mono">02</p>
+                <strong>Refine</strong>
+                <span>Tradeoffs stay visible</span>
+              </div>
+              <div class="micro-card">
+                <p class="mono">03</p>
+                <strong>Ship</strong>
+                <span>Maintainable systems</span>
+              </div>
             </div>
-          </aside>
+
+            <div class="orbital" aria-hidden="true">
+              <span class="orbital-core" />
+              <span class="orbital-dot -one" />
+              <span class="orbital-dot -two" />
+              <span class="orbital-dot -three" />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="shell section-block">
+      <div class="section-grid">
+        <div>
+          <p class="section-number">01</p>
+          <p class="eyebrow mt-4">Selected work</p>
+          <h2 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">Curated, not dumped from GitHub.</h2>
+          <p class="section-copy">The strongest work goes first. Everything else lives in a cleaner archive.</p>
+        </div>
+
+        <div>
+          <div v-if="projectsPending" class="surface rounded-[1.5rem] p-6 text-sm text-muted">Loading projects...</div>
+
+          <template v-else>
+            <div v-if="featuredProject" class="spotlight-shell">
+              <div>
+                <img
+                  v-if="featuredProject.previewImage"
+                  :src="featuredProject.previewImage"
+                  :alt="`${featuredProject.name} preview`"
+                  class="mb-5 h-56 w-full rounded-[1.25rem] border hairline object-cover"
+                >
+
+                <p class="mono">{{ featuredProject.isPrivate ? 'Private repository' : 'Featured repository' }}</p>
+                <h3 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{{ featuredProject.name }}</h3>
+                <p class="mt-5 max-w-2xl text-sm leading-7 text-muted">{{ featuredProject.description }}</p>
+
+                <div class="spotlight-meta mt-6">
+                  <span v-for="tag in featuredProject.stack.slice(0, 5)" :key="tag" class="meta-pill">{{ tag }}</span>
+                  <span v-if="featuredProject.isPrivate" class="meta-pill">Private repo</span>
+                </div>
+
+                <a
+                  v-if="featuredProject.showGithubLink && featuredProject.githubUrl"
+                  :href="featuredProject.githubUrl"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="archive-link mt-8"
+                >
+                  Open repository →
+                </a>
+                <span v-else class="archive-link mt-8 opacity-70">Curated portfolio entry</span>
+              </div>
+
+              <div class="metric-stack">
+                <div class="metric-box">
+                  <span>Role</span>
+                  <strong>{{ featuredProject.role || featuredProject.language }}</strong>
+                </div>
+                <div class="metric-box">
+                  <span>Updated</span>
+                  <strong>{{ formatDate(featuredProject.updatedAt) }}</strong>
+                </div>
+                <div class="metric-box">
+                  <span>Signals</span>
+                  <strong>★ {{ featuredProject.stars }} · ⑂ {{ featuredProject.forks }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-list mt-8">
+              <div v-for="project in archiveProjects" :key="project.fullName" class="project-row">
+                <div>
+                  <p class="mono">{{ project.role || project.language || 'Repository' }}</p>
+                  <h3 class="mt-2">{{ project.name }}</h3>
+                  <p>{{ project.description }}</p>
+                </div>
+                <div class="row-side">
+                  <div>{{ formatDate(project.updatedAt) }}</div>
+                  <a v-if="project.showGithubLink && project.githubUrl" :href="project.githubUrl" target="_blank" rel="noreferrer" class="archive-link mt-2">
+                    ↗
+                  </a>
+                  <div v-else class="mt-2">Private</div>
+                </div>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </section>
 
-    <section class="shell mt-20">
-      <div class="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
+    <section class="shell section-block">
+      <div class="section-grid">
         <div>
-          <p class="eyebrow">Approach</p>
-          <h2 class="section-title mt-4">Product taste backed by engineering discipline.</h2>
-          <p class="section-copy mt-5">
-            The goal is simple: ship thoughtful work, move fast, and keep the system easy to evolve.
-          </p>
+          <p class="section-number">02</p>
+          <p class="eyebrow mt-4">How I work</p>
+          <h2 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">Fast delivery. Clear tradeoffs. Less noise.</h2>
         </div>
 
-        <div class="grid gap-4 sm:grid-cols-3">
-          <article v-for="principle in siteConfig.principles" :key="principle.title" class="panel rounded-[1.6rem] p-5">
-            <p class="text-lg font-semibold tracking-tight">{{ principle.title }}</p>
-            <p class="mt-3 text-sm leading-7 text-muted">{{ principle.description }}</p>
+        <div class="principle-list">
+          <article v-for="principle in siteConfig.principles" :key="principle.title" class="principle-item">
+            <h3>{{ principle.title }}</h3>
+            <p>{{ principle.description }}</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="shell mt-20">
-      <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+    <section class="shell section-block">
+      <div class="section-grid">
         <div>
-          <p class="eyebrow">Tooling</p>
-          <h2 class="section-title mt-4">AI is part of the workflow, not the headline.</h2>
-          <p class="section-copy mt-5">
-            I use AI to reduce friction in research, debugging, implementation, and review — then keep final decisions deliberate.
-          </p>
+          <p class="section-number">03</p>
+          <p class="eyebrow mt-4">Notes</p>
+          <h2 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">Short writing with actual signal.</h2>
+          <p class="section-copy">Delivery, systems, Laravel, Vue, and how I use AI tools without outsourcing engineering judgment.</p>
         </div>
 
-        <div class="grid gap-4 sm:grid-cols-3">
-          <article v-for="tool in siteConfig.aiTools" :key="tool.name" class="panel rounded-[1.6rem] p-5">
-            <p class="text-lg font-semibold tracking-tight">{{ tool.name }}</p>
-            <p class="mt-3 text-sm leading-7 text-muted">{{ tool.purpose }}</p>
-          </article>
+        <div class="note-list">
+          <NuxtLink v-for="post in featuredPosts" :key="post.path" :to="post.path" class="note-row">
+            <div>
+              <p class="mono">{{ formatDate(post.date) }} · {{ post.readingTime || 'Short read' }}</p>
+              <h3 class="mt-2">{{ post.title }}</h3>
+              <p>{{ post.description }}</p>
+            </div>
+            <div class="row-side">↗</div>
+          </NuxtLink>
         </div>
-      </div>
-    </section>
-
-    <section class="shell mt-20">
-      <div class="flex items-end justify-between gap-4">
-        <div>
-          <p class="eyebrow">Selected work</p>
-          <h2 class="section-title mt-4">GitHub-backed projects, curated for clarity.</h2>
-        </div>
-        <NuxtLink to="/projects" class="link-inline hidden sm:inline-flex">All projects →</NuxtLink>
-      </div>
-
-      <div class="mt-8 grid gap-5 lg:grid-cols-3">
-        <ProjectCard v-for="project in projects" :key="project.name" :project="project" />
-        <div v-if="projectsPending" class="grid-card text-sm text-muted">Loading projects...</div>
-      </div>
-    </section>
-
-    <section class="shell mt-20">
-      <div class="flex items-end justify-between gap-4">
-        <div>
-          <p class="eyebrow">Writing</p>
-          <h2 class="section-title mt-4">Short notes on shipping, systems, and workflow.</h2>
-        </div>
-        <NuxtLink to="/blog" class="link-inline hidden sm:inline-flex">Open blog →</NuxtLink>
-      </div>
-
-      <div class="mt-8 grid gap-5 lg:grid-cols-3">
-        <BlogCard v-for="post in featuredPosts" :key="post.path" :post="post" />
       </div>
     </section>
   </div>

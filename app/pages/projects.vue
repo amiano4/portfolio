@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatDate } from '~/utils/format'
 import { siteConfig } from '~~/shared/site'
 
 useSeoMeta({
@@ -10,66 +11,107 @@ useSeoMeta({
 
 const mode = usePortfolioMode()
 const runtimeConfig = useRuntimeConfig()
+const activeCategory = ref('All')
 
 const { data: projects, pending, error, refresh } = await useFetch('/api/projects', {
   default: () => []
 })
 
-const featuredProjects = computed(() => projects.value.filter((project) => project.featured))
-const otherProjects = computed(() => projects.value.filter((project) => !project.featured))
+const categories = computed(() => {
+  const values = new Set<string>()
+
+  for (const project of projects.value) {
+    for (const category of project.categories) {
+      values.add(category)
+    }
+  }
+
+  return ['All', ...[...values].sort((left, right) => left.localeCompare(right))]
+})
+
+const filteredProjects = computed(() => {
+  if (activeCategory.value === 'All') {
+    return projects.value
+  }
+
+  return projects.value.filter((project) => project.categories.includes(activeCategory.value))
+})
+
+const featuredProjects = computed(() => filteredProjects.value.filter((project) => project.featured))
+const otherProjects = computed(() => filteredProjects.value.filter((project) => !project.featured))
 </script>
 
 <template>
-  <div class="shell py-10 sm:py-14">
-    <section class="frame rounded-[2rem] p-8 sm:p-10 lg:p-12">
-      <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-        <div>
-          <p class="eyebrow">Projects</p>
-          <h1 class="mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-            Public work from GitHub, refined with portfolio context.
-          </h1>
-          <p class="section-copy mt-5 max-w-3xl">
-            Repositories are pulled from <span class="font-medium text-[color:var(--text)]">{{ runtimeConfig.public.githubUsername }}</span>, then curated locally to highlight the work that best represents product, systems, and tooling depth.
-          </p>
-        </div>
+  <div class="shell">
+    <section class="list-page-hero">
+      <p class="eyebrow">Projects</p>
+      <h1 class="list-page-title mt-5">Curated projects from GitHub repos.</h1>
+      <p class="section-copy mt-6 max-w-2xl">
+        Repositories from <span class="font-medium text-[color:var(--text)]">{{ runtimeConfig.public.githubUsername }}</span>, enriched by optional <code>.portfolio/info.json</code> files, derived categories, and private-safe snapshot previews.
+      </p>
 
-        <aside class="panel rounded-[1.75rem] p-6">
-          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-muted">Source</p>
-          <div class="mt-4 space-y-3 text-sm text-muted">
-            <p>Mode: <span class="font-medium text-[color:var(--text)]">{{ mode }}</span></p>
-            <p>
-              Profile:
-              <a :href="siteConfig.githubUrl" target="_blank" class="text-[color:var(--brand)]">{{ siteConfig.githubUrl }}</a>
-            </p>
-          </div>
-          <button type="button" class="button-secondary mt-6 w-full" @click="refresh()">Refresh data</button>
-        </aside>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <span class="signal-badge">{{ mode === 'product' ? 'Product mode' : 'Developer mode' }}</span>
+        <a :href="siteConfig.githubUrl" target="_blank" class="button-secondary">GitHub profile</a>
+        <button type="button" class="button-secondary" @click="refresh()">Refresh data</button>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-2">
+        <button
+          v-for="category in categories"
+          :key="category"
+          type="button"
+          class="tag-min cursor-pointer transition-colors"
+          :class="activeCategory === category ? '!border-[color:var(--line-strong)] !text-[color:var(--text)]' : ''"
+          @click="activeCategory = category"
+        >
+          {{ category }}
+        </button>
       </div>
     </section>
 
-    <section class="mt-14">
+    <section class="section-block !pt-0">
       <div>
-        <p class="eyebrow">Featured</p>
-        <h2 class="section-title mt-4">The strongest signals first.</h2>
+        <p class="section-number">01</p>
+        <p class="eyebrow mt-4">Featured</p>
       </div>
 
-      <div v-if="pending" class="mt-8 grid-card text-sm text-muted">Loading GitHub repositories...</div>
-      <div v-else-if="error" class="mt-8 grid-card text-sm text-red-500 dark:text-red-300">
+      <div v-if="pending" class="surface mt-8 rounded-[1.5rem] p-6 text-sm text-muted">Loading GitHub repositories...</div>
+      <div v-else-if="error" class="surface mt-8 rounded-[1.5rem] p-6 text-sm text-red-500 dark:text-red-300">
         Failed to load projects. Check the GitHub username or token configuration.
       </div>
-      <div v-else class="mt-8 grid gap-5 lg:grid-cols-2">
-        <ProjectCard v-for="project in featuredProjects" :key="project.name" :project="project" />
+      <div v-else-if="!filteredProjects.length" class="surface mt-8 rounded-[1.5rem] p-6 text-sm text-muted">
+        No projects matched the selected category.
+      </div>
+      <div v-else class="editorial-list grid gap-10 lg:grid-cols-2">
+        <ProjectCard v-for="project in featuredProjects" :key="project.fullName" :project="project" />
       </div>
     </section>
 
-    <section class="mt-14">
+    <section v-if="otherProjects.length" class="section-block pt-0">
       <div>
-        <p class="eyebrow">Archive</p>
-        <h2 class="section-title mt-4">Utilities, experiments, and foundations.</h2>
+        <p class="section-number">02</p>
+        <p class="eyebrow mt-4">Archive</p>
       </div>
 
-      <div class="mt-8 grid gap-5 lg:grid-cols-2">
-        <ProjectCard v-for="project in otherProjects" :key="project.name" :project="project" />
+      <div class="project-list mt-8">
+        <div v-for="project in otherProjects" :key="project.fullName" class="project-row">
+          <div>
+            <p class="mono">{{ project.role || project.language || 'Repository' }}</p>
+            <h3 class="mt-2">{{ project.name }}</h3>
+            <p>{{ project.description }}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span v-for="category in project.categories.slice(0, 3)" :key="category" class="tag-min">{{ category }}</span>
+            </div>
+          </div>
+          <div class="row-side">
+            <div>{{ formatDate(project.updatedAt) }}</div>
+            <a v-if="project.showGithubLink && project.githubUrl" :href="project.githubUrl" target="_blank" rel="noreferrer" class="archive-link mt-2">
+              ↗
+            </a>
+            <div v-else class="mt-2">Private</div>
+          </div>
+        </div>
       </div>
     </section>
   </div>

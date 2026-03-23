@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { formatDate } from '~/utils/format'
+
 useSeoMeta({
   title: 'Blog',
   description: 'Short, practical writing on shipping software, Laravel/Vue patterns, and AI-assisted workflows.',
@@ -15,19 +17,29 @@ const posts = computed(() => {
 </script>
 
 <template>
-  <div class="shell py-10 sm:py-14">
-    <section class="frame rounded-[2rem] p-8 sm:p-10 lg:p-12">
+  <div class="shell">
+    <section class="list-page-hero">
       <p class="eyebrow">Blog</p>
-      <h1 class="mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-        Notes on shipping well, keeping systems clean, and using AI deliberately.
-      </h1>
-      <p class="section-copy mt-5 max-w-3xl">
-        Posts live as local markdown content, so writing stays simple while the site keeps clean routing and solid SEO.
+      <h1 class="list-page-title mt-5">Short notes. Practical ideas.</h1>
+      <p class="section-copy mt-6 max-w-2xl">
+        Writing on delivery, systems, Laravel/Vue patterns, and AI-assisted workflows.
       </p>
     </section>
 
-    <section class="mt-14 grid gap-5 lg:grid-cols-3">
-      <BlogCard v-for="post in posts" :key="post.path" :post="post" />
+    <section class="section-block !pt-0">
+      <div class="note-list">
+        <NuxtLink v-for="post in posts" :key="post.path" :to="post.path" class="note-row">
+          <div>
+            <p class="mono">{{ formatDate(post.date) }} · {{ post.readingTime || 'Short read' }}</p>
+            <h3 class="mt-2">{{ post.title }}</h3>
+            <p>{{ post.description }}</p>
+          </div>
+          <div class="row-side">
+            <div>{{ (post.tags || []).slice(0, 2).join(' · ') }}</div>
+            <div class="mt-2">↗</div>
+          </div>
+        </NuxtLink>
+      </div>
     </section>
   </div>
 </template>

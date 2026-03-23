@@ -27,17 +27,25 @@ export interface ProjectOverride {
 }
 
 export interface ProjectSummary {
+  repoName: string
+  fullName: string
   name: string
   description: string
-  url: string
+  githubUrl: string | null
   homepage: string | null
   language: string | null
   stars: number
   forks: number
   updatedAt: string
   topics: string[]
+  categories: string[]
   featured: boolean
   role?: string
   stack: string[]
   highlights: string[]
+  isPrivate: boolean
+  curated: boolean
+  showGithubLink: boolean
+  previewImage: string | null
+  snapshots: string[]
 }

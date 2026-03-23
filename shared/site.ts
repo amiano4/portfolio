@@ -53,7 +53,7 @@ export const siteConfig = {
       purpose: 'Inline acceleration for repetitive implementation work'
     }
   ] satisfies AiTool[],
-  featuredRepos: ['aegis-mailer', 'monorepo-template', 'laravel-vue-docker-based-boilerplate', 'jsflow']
+  featuredRepos: ['portfolio', 'aegis-mailer', 'monorepo-template', 'laravel-vue-docker-based-boilerplate', 'jsflow']
 }
 
 export const projectOverrides: Record<string, ProjectOverride> = {
