@@ -131,8 +131,8 @@ export const projects: Project[] = [
     ],
     highlights: [
       "Competed in the MPTC Innovation Olympics — made it to the final exhibit",
-      "Team of 3, each from different colleges",
-      "Division sponsor CCLEX awarded our school a scholarship program",
+      "Led a team of three from planning, through development, to exhibition",
+      "Presented the Tollfast app to MPTC executives, highlighting its potential impact and technical innovation",
     ],
     images: [
       "/snapshots/tollfast/01.svg",
