@@ -19,27 +19,22 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="shell py-10 sm:py-14">
-    <article class="mx-auto max-w-4xl">
-      <NuxtLink to="/blog" class="link-inline">← Back to blog</NuxtLink>
+  <div class="shell py-12 sm:py-16">
+    <article class="mx-auto max-w-2xl">
+      <NuxtLink to="/blog" class="link-arrow">← Back</NuxtLink>
 
-      <header class="frame mt-6 rounded-[2rem] p-8 sm:p-10 lg:p-12">
-        <p class="eyebrow">Blog post</p>
-        <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">{{ post?.title }}</h1>
-        <p class="section-copy mt-5 max-w-3xl">{{ post?.description }}</p>
-
-        <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-muted">
+      <header class="mt-8 border-b hairline pb-8">
+        <p class="mono">{{ (post?.tags || []).slice(0, 2).join(' · ') || 'blog' }}</p>
+        <h1 class="heading mt-2 text-xl font-semibold tracking-tight sm:text-2xl">{{ post?.title }}</h1>
+        <p class="mt-2 text-sm text-muted">{{ post?.description }}</p>
+        <div class="mt-3 flex items-center gap-2 mono">
           <span>{{ post?.date ? formatDate(post.date) : '' }}</span>
-          <span>•</span>
+          <span>·</span>
           <span>{{ post?.readingTime || 'Short read' }}</span>
-          <template v-for="tag in post?.tags || []" :key="tag">
-            <span>•</span>
-            <span>{{ tag }}</span>
-          </template>
         </div>
       </header>
 
-      <div class="surface mt-8 rounded-[2rem] p-8 sm:p-10 lg:p-12">
+      <div class="mt-8">
         <ContentRenderer v-if="post" :value="post" class="prose-custom" />
       </div>
     </article>

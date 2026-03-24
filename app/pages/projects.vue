@@ -62,8 +62,9 @@ const toolEntries = computed(() => filteredProjects.value.filter((project) => pr
           v-for="category in categories"
           :key="category"
           type="button"
-          class="tag-min cursor-pointer transition-colors"
-          :class="activeCategory === category ? '!border-[color:var(--line-strong)] !text-[color:var(--text)]' : ''"
+          class="tag cursor-pointer transition-colors"
+          :data-cat="activeCategory === category ? category : undefined"
+          :class="activeCategory === category ? '' : '!bg-transparent'"
           @click="activeCategory = category"
         >
           {{ category }}
@@ -110,7 +111,7 @@ const toolEntries = computed(() => filteredProjects.value.filter((project) => pr
               <h3 class="mt-2">{{ project.name }}</h3>
               <p>{{ project.description }}</p>
               <div class="mt-3 flex flex-wrap gap-2">
-                <span v-for="category in project.categories.slice(0, 3)" :key="category" class="tag-min">{{ category }}</span>
+                <span v-for="category in project.categories.slice(0, 3)" :key="category" class="tag" :data-cat="category">{{ category }}</span>
               </div>
             </div>
             <div class="row-side">
@@ -137,7 +138,7 @@ const toolEntries = computed(() => filteredProjects.value.filter((project) => pr
               <h3 class="mt-2">{{ project.name }}</h3>
               <p>{{ project.description }}</p>
               <div class="mt-3 flex flex-wrap gap-2">
-                <span v-for="category in project.categories.slice(0, 3)" :key="category" class="tag-min">{{ category }}</span>
+                <span v-for="category in project.categories.slice(0, 3)" :key="category" class="tag" :data-cat="category">{{ category }}</span>
               </div>
             </div>
             <div class="row-side">

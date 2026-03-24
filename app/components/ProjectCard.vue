@@ -35,13 +35,11 @@ const mode = usePortfolioMode()
       >
         ↗
       </a>
-      <span v-else class="tag-min">Private</span>
     </div>
 
     <div class="project-tile-tags">
-      <span v-for="category in props.project.categories.slice(0, 2)" :key="category" class="tag-min">{{ category }}</span>
+      <span v-for="category in props.project.categories.slice(0, 2)" :key="category" class="tag" :data-cat="category">{{ category }}</span>
       <span v-for="tag in props.project.stack.slice(0, 4)" :key="tag" class="tag-min">{{ tag }}</span>
-      <span v-if="props.project.isPrivate" class="tag-min">Private repo</span>
     </div>
 
     <div v-if="mode === 'developer' && props.project.highlights.length" class="mt-5 rounded-[1rem] border hairline p-4 text-sm text-muted">
@@ -53,7 +51,8 @@ const mode = usePortfolioMode()
 
     <div class="project-tile-footer">
       <span>Updated {{ formatDate(props.project.updatedAt) }}</span>
-      <span>★ {{ formatCompactNumber(props.project.stars) }} · ⑂ {{ formatCompactNumber(props.project.forks) }}</span>
+      <span v-if="props.project.isPrivate" class="tag-min">Private</span>
+      <span v-else>★ {{ formatCompactNumber(props.project.stars) }} · ⑂ {{ formatCompactNumber(props.project.forks) }}</span>
     </div>
   </article>
 </template>
