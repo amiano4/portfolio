@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand colors */
+  --color-canvas: #080C14;
+  --color-surface: #0c1221;
+  --color-elevated: #111927;
+  --color-accent: #0EA5E9;
+  --color-accent-dim: #0284C7;
+  --color-amber: #FBBF24;
+  --color-amber-dim: #D97706;
+
+  /* Typography */
+  --font-sans: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Base */
+html {
+  background-color: #080C14;
+  color: theme(--color-slate-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* Nuxt Content prose */
+.prose {
+  color: theme(--color-slate-300);
+  max-width: 68ch;
+  line-height: 1.75;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: theme(--color-slate-100);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose h1 { font-size: 2.25rem; }
+.prose h2 { font-size: 1.75rem; }
+.prose h3 { font-size: 1.35rem; }
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose a {
+  color: #0EA5E9;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: #38BDF8;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background-color: #0c1221;
+  border: 1px solid theme(--color-slate-700);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  color: #38BDF8;
+}
+
+.prose pre {
+  background-color: #0c1221;
+  border: 1px solid theme(--color-slate-800);
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: theme(--color-slate-200);
+}
+
+.prose blockquote {
+  border-left: 3px solid #0EA5E9;
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  color: theme(--color-slate-400);
+  font-style: italic;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.4rem;
+}
+
+.prose hr {
+  border-color: theme(--color-slate-800);
+  margin: 2.5rem 0;
+}

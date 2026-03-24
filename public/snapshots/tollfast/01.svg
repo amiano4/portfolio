@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 720" width="390" height="720">
+  <!-- Background -->
+  <rect width="390" height="720" fill="#0a0e1a"/>
+
+  <!-- Status bar -->
+  <rect width="390" height="44" fill="#080c14"/>
+  <text x="20" y="28" font-family="monospace" font-size="12" fill="#94a3b8">9:41</text>
+  <text x="340" y="28" font-family="monospace" font-size="12" fill="#94a3b8">●●●</text>
+
+  <!-- Header -->
+  <rect width="390" height="64" y="44" fill="#0d1220"/>
+  <text x="20" y="84" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">Tollfast</text>
+  <circle cx="355" cy="76" r="18" fill="#0ea5e9" opacity="0.15"/>
+  <text x="347" y="81" font-family="monospace" font-size="14" fill="#0ea5e9">≡</text>
+
+  <!-- Map area -->
+  <rect x="0" y="108" width="390" height="220" fill="#111927"/>
+  <rect x="0" y="108" width="390" height="220" fill="url(#grid)" opacity="0.3"/>
+  <defs>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <!-- Roads -->
+  <rect x="140" y="108" width="12" height="220" fill="#1e293b"/>
+  <rect x="0" y="210" width="390" height="10" fill="#1e293b"/>
+  <rect x="220" y="108" width="8" height="220" fill="#1e293b"/>
+  <!-- Toll gate marker -->
+  <circle cx="146" cy="215" r="10" fill="#0ea5e9" opacity="0.9"/>
+  <circle cx="146" cy="215" r="18" fill="#0ea5e9" opacity="0.2"/>
+  <!-- Current location -->
+  <circle cx="195" cy="250" r="8" fill="#fbbf24"/>
+  <circle cx="195" cy="250" r="16" fill="#fbbf24" opacity="0.2"/>
+  <!-- Map label -->
+  <rect x="12" y="120" width="100" height="22" rx="4" fill="#080c14" opacity="0.8"/>
+  <text x="20" y="135" font-family="monospace" font-size="10" fill="#0ea5e9">● LIVE TRACKING</text>
+
+  <!-- Balance card -->
+  <rect x="20" y="348" width="350" height="110" rx="4" fill="#0d1220" stroke="#1e293b" stroke-width="1"/>
+  <text x="36" y="375" font-family="monospace" font-size="10" fill="#475569" letter-spacing="2">WALLET BALANCE</text>
+  <text x="36" y="415" font-family="Arial, sans-serif" font-size="36" font-weight="700" fill="#f1f5f9">₱ 245.00</text>
+  <rect x="286" y="355" width="64" height="26" rx="3" fill="#0ea5e9" opacity="0.15"/>
+  <text x="300" y="373" font-family="monospace" font-size="10" fill="#0ea5e9">TOP UP</text>
+  <text x="36" y="444" font-family="monospace" font-size="10" fill="#22c55e">● Auto-pay enabled</text>
+
+  <!-- Recent tolls -->
+  <text x="20" y="488" font-family="monospace" font-size="10" fill="#475569" letter-spacing="2">RECENT TOLLS</text>
+
+  <!-- Toll row 1 -->
+  <rect x="20" y="500" width="350" height="56" rx="4" fill="#0d1220" stroke="#1e293b" stroke-width="1"/>
+  <circle cx="46" cy="528" r="10" fill="#0ea5e9" opacity="0.15"/>
+  <text x="40" y="532" font-family="monospace" font-size="10" fill="#0ea5e9">⬡</text>
+  <text x="66" y="523" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9">CCLEX Main Gate</text>
+  <text x="66" y="540" font-family="monospace" font-size="10" fill="#475569">Today, 08:42 AM</text>
+  <text x="310" y="530" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9">₱ 72</text>
+
+  <!-- Toll row 2 -->
+  <rect x="20" y="564" width="350" height="56" rx="4" fill="#0d1220" stroke="#1e293b" stroke-width="1"/>
+  <circle cx="46" cy="592" r="10" fill="#0ea5e9" opacity="0.15"/>
+  <text x="40" y="596" font-family="monospace" font-size="10" fill="#0ea5e9">⬡</text>
+  <text x="66" y="587" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9">North Luzon Expy</text>
+  <text x="66" y="604" font-family="monospace" font-size="10" fill="#475569">Yesterday, 06:15 PM</text>
+  <text x="310" y="594" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9">₱ 48</text>
+
+  <!-- Bottom nav -->
+  <rect x="0" y="656" width="390" height="64" fill="#080c14" stroke="#1e293b" stroke-width="1"/>
+  <text x="35" y="684" font-family="monospace" font-size="18" fill="#0ea5e9">⌂</text>
+  <text x="30" y="700" font-family="monospace" font-size="9" fill="#0ea5e9">HOME</text>
+  <text x="135" y="684" font-family="monospace" font-size="18" fill="#475569">↺</text>
+  <text x="125" y="700" font-family="monospace" font-size="9" fill="#475569">HISTORY</text>
+  <text x="235" y="684" font-family="monospace" font-size="18" fill="#475569">◎</text>
+  <text x="225" y="700" font-family="monospace" font-size="9" fill="#475569">ROUTES</text>
+  <text x="335" y="684" font-family="monospace" font-size="18" fill="#475569">◷</text>
+  <text x="330" y="700" font-family="monospace" font-size="9" fill="#475569">PROFILE</text>
+</svg>
