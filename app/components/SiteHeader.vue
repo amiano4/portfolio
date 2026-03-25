@@ -46,7 +46,7 @@ watch(
           {{ link.label }}
         </NuxtLink>
         <a
-          href="/resume.pdf"
+          :href="site.assets.resume"
           download
           class="font-mono text-xs uppercase tracking-widest text-slate-400 hover:text-slate-100 transition-colors"
         >
@@ -105,7 +105,7 @@ watch(
         {{ link.label }}
       </NuxtLink>
       <a
-        href="/resume.pdf"
+        :href="site.assets.resume"
         download
         class="font-mono text-sm uppercase tracking-widest text-slate-400"
       >

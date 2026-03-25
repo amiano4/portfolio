@@ -47,6 +47,10 @@ export interface Site {
     writing: { heading: string; description: string }
     contact: { heading: string; headingAccent: string; description: string }
   }
+  assets: {
+    resume: string
+    favicon?: string
+  }
   contact: {
     email: string
     github: string

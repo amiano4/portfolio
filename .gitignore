@@ -15,7 +15,7 @@ data/projects.json
 data/principles.json
 data/ai-tools.json
 
-# Personal assets
+# Local assets (optional — asset URLs are configured in data/site.json and data/projects.json)
 public/resume.pdf
 public/snapshots/
 

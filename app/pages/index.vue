@@ -368,7 +368,7 @@ useSeoMeta({
                 Email ↗
               </a>
               <a
-                href="/resume.pdf"
+                :href="site.assets.resume"
                 download
                 class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
               >

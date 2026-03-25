@@ -47,6 +47,10 @@
       "description": "A short description of what you're open to."
     }
   },
+  "assets": {
+    "resume": "/resume.pdf",
+    "favicon": "/favicon.svg"
+  },
   "contact": {
     "email": "you@example.com",
     "github": "https://github.com/yourusername",
