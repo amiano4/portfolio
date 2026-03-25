@@ -50,6 +50,7 @@ export interface Site {
   assets: {
     resume: string
     favicon?: string
+    repo?: string
   }
   contact: {
     email: string

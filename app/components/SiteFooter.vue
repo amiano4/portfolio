@@ -52,10 +52,19 @@ import { site } from '~/utils/data'
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 pb-8">
+    <div class="max-w-6xl mx-auto px-6 pb-8 flex items-center justify-between gap-4">
       <p class="font-mono text-xs text-slate-700 uppercase tracking-widest">
         © {{ new Date().getFullYear() }} {{ site.fullName }}. All rights reserved.
       </p>
+      <a
+        v-if="site.assets.repo"
+        :href="site.assets.repo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-mono text-xs uppercase tracking-widest text-slate-700 hover:text-accent transition-colors"
+      >
+        Fork this repo ↗
+      </a>
     </div>
   </footer>
 </template>
