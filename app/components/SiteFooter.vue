@@ -1,10 +1,45 @@
 <script setup lang="ts">
-import { site } from '~/utils/data'
+import { computed } from "vue";
+import { site } from "~/utils/data";
+
+const runtimeConfig = useRuntimeConfig();
+
+const deployedAtLabel = computed(() => {
+  const deployedAt = runtimeConfig.public.deployedAt;
+
+  if (!deployedAt) {
+    return "";
+  }
+
+  const date = new Date(deployedAt);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Manila",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(date);
+
+  const getPart = (type: string) =>
+    parts.find((part) => part.type === type)?.value ?? "";
+
+  return `v. UTC+8 ${getPart("day")}/${getPart("month")}/${getPart("year")} ${getPart("hour")}:${getPart("minute")}:${getPart("second")}`;
+});
 </script>
 
 <template>
   <footer class="border-t border-slate-800 mt-24">
-    <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div
+      class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+    >
       <!-- Left -->
       <div>
         <div class="flex items-center gap-2.5 mb-2">
@@ -53,10 +88,21 @@ import { site } from '~/utils/data'
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 pb-8 flex items-center justify-between gap-4">
-      <p class="font-mono text-xs text-slate-700 uppercase tracking-widest">
-        © {{ new Date().getFullYear() }} {{ site.fullName }}. All rights reserved.
-      </p>
+    <div
+      class="max-w-6xl mx-auto px-6 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+    >
+      <div>
+        <p class="font-mono text-xs text-slate-700 uppercase tracking-widest">
+          © {{ new Date().getFullYear() }} {{ site.fullName }}. All rights
+          reserved.
+        </p>
+        <p
+          v-if="deployedAtLabel"
+          class="mt-2 font-mono text-[11px] text-slate-700 tracking-widest"
+        >
+          {{ deployedAtLabel }}
+        </p>
+      </div>
       <a
         v-if="site.assets.repo"
         :href="site.assets.repo"

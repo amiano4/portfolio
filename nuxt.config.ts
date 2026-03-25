@@ -9,6 +9,11 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  runtimeConfig: {
+    public: {
+      deployedAt: process.env.DEPLOYED_AT || '',
+    },
+  },
 
   app: {
     head: {
