@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { site } from '~/utils/data'
+
 const isMenuOpen = ref(false)
 
 const links = [
@@ -26,7 +28,7 @@ watch(
         to="/"
         class="font-semibold text-lg text-slate-100 tracking-tight hover:text-white transition-colors"
       >
-        Almario<span class="text-accent">.</span>
+        {{ site.name }}<span class="text-accent">.</span>
       </NuxtLink>
 
       <!-- Desktop nav -->

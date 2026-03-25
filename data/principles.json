@@ -1,0 +1,22 @@
+[
+  {
+    "number": "01",
+    "title": "Own what you ship.",
+    "body": "I don't ship because it passes a test. I ship because I understand the problem and the solution completely. Full ownership means full accountability — no handoffs, no excuses."
+  },
+  {
+    "number": "02",
+    "title": "Simple first.",
+    "body": "Start with the simplest solution that solves the problem. Prove it works. Then optimize when reality demands it — not before. Complexity earned is complexity justified."
+  },
+  {
+    "number": "03",
+    "title": "Think in what-ifs.",
+    "body": "I take the mind of the client or user and ask what-ifs before they hit production. Flexibility is designed in, not bolted on after something breaks."
+  },
+  {
+    "number": "04",
+    "title": "Debt is a choice.",
+    "body": "Technical debt doesn't just happen. It's a decision made by someone who'd rather move fast than move right. I choose to move right — every time."
+  }
+]

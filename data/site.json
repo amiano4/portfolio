@@ -1,0 +1,19 @@
+{
+  "name": "Almario",
+  "fullName": "Almario Miano",
+  "title": "Full-Stack Developer",
+  "available": true,
+  "hero": {
+    "heading": "I build systems",
+    "headingAccent": "that hold.",
+    "subheading": "From architecture to production — and everything after. Based in the Philippines, working remotely across timezones."
+  },
+  "contact": {
+    "email": "almariomiano@gmail.com",
+    "github": "https://github.com/amiano4",
+    "linkedin": "https://linkedin.com/in/almariomiano"
+  },
+  "seo": {
+    "description": "Full-Stack Developer building systems that hold — from architecture to production, and everything after."
+  }
+}

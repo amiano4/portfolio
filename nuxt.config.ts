@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite'
+import site from './data/site.json'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -11,21 +12,17 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: 'https://almario.dev',
-      contactEmail: 'almariomiano@gmail.com',
+      contactEmail: site.contact.email,
     },
   },
   app: {
     head: {
-      title: 'Almario',
-      titleTemplate: '%s · Almario',
+      title: site.name,
+      titleTemplate: `%s · ${site.name}`,
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#080C14' },
-        {
-          name: 'description',
-          content:
-            'Full-Stack Developer building systems that hold — from architecture to production, and everything after.',
-        },
+        { name: 'description', content: site.seo.description },
       ],
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

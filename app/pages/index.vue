@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { projects, principles } from '~/utils/data'
+import { projects, principles, site } from '~/utils/data'
 
 const featuredProjects = computed(() => projects.filter((p) => p.featured))
 
@@ -8,9 +8,9 @@ const { data: latestPosts } = await useAsyncData('latest-posts', () =>
 )
 
 useSeoMeta({
-  title: 'Almario — Full-Stack Developer',
+  title: `${site.name} — ${site.title}`,
   description:
-    'Full-Stack Developer building systems that hold — from architecture to production, and everything after.',
+    site.seo.description,
 })
 </script>
 
@@ -41,21 +41,20 @@ useSeoMeta({
 
         <!-- Mono label -->
         <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6">
-          Full-Stack Developer
+          {{ site.title }}
         </p>
 
         <!-- Heading -->
         <h1
           class="text-5xl sm:text-7xl md:text-8xl font-bold leading-[1.0] tracking-tight text-slate-100 mb-8"
         >
-          I build systems<br />
-          <span class="text-slate-400">that hold.</span>
+          {{ site.hero.heading }}<br />
+          <span class="text-slate-400">{{ site.hero.headingAccent }}</span>
         </h1>
 
         <!-- Sub copy -->
         <p class="text-lg text-slate-400 max-w-xl leading-relaxed mb-12">
-          From architecture to production — and everything after. Based in the Philippines,
-          working remotely across timezones.
+          {{ site.hero.subheading }}
         </p>
 
         <!-- CTAs -->
@@ -290,7 +289,7 @@ useSeoMeta({
             </p>
             <div class="flex items-center gap-8">
               <a
-                href="https://github.com/amiano4"
+                :href="site.contact.github"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
@@ -298,7 +297,7 @@ useSeoMeta({
                 GitHub ↗
               </a>
               <a
-                href="https://linkedin.com/in/almariomiano"
+                :href="site.contact.linkedin"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
@@ -306,7 +305,7 @@ useSeoMeta({
                 LinkedIn ↗
               </a>
               <a
-                href="mailto:almariomiano@gmail.com"
+                :href="`mailto:${site.contact.email}`"
                 class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
               >
                 Email ↗
