@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { aiTools } from '~/utils/data'
+
 useSeoMeta({
   title: 'About',
   description:
@@ -107,10 +109,55 @@ const stack = {
         </div>
       </section>
 
+      <!-- ─── AI TOOLING ─────────────────────────────────────────────── -->
+      <section class="py-20 border-t border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-6">
+          <SectionLabel number="04" label="AI Tooling" />
+
+          <!-- Primary -->
+          <div class="border border-accent/20 bg-accent/5 p-6 mb-5">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-2">
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest text-accent mb-1">Primary Agent</p>
+                <h3 class="text-xl font-bold text-slate-100">{{ aiTools.primary.name }}</h3>
+              </div>
+              <span class="font-mono text-xs uppercase tracking-widest text-slate-600 border border-slate-800 px-3 py-1">
+                {{ aiTools.primary.type }}
+              </span>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">{{ aiTools.primary.description }}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
+            <div class="bg-canvas p-6">
+              <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Also Use</p>
+              <div class="flex flex-col gap-3">
+                <div v-for="agent in aiTools.agents" :key="agent.name">
+                  <p class="text-sm font-medium text-slate-200">{{ agent.name }}</p>
+                  <p class="font-mono text-xs text-slate-600">{{ agent.note }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-canvas p-6">
+              <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Models</p>
+              <div class="flex flex-col gap-2">
+                <span v-for="model in aiTools.models" :key="model" class="text-sm text-slate-400">{{ model }}</span>
+              </div>
+            </div>
+            <div class="bg-canvas p-6">
+              <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Editor</p>
+              <div class="flex flex-col gap-2">
+                <span v-for="editor in aiTools.editors" :key="editor" class="text-sm text-slate-400">{{ editor }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ─── CURRENTLY ─────────────────────────────────────────────── -->
       <section class="py-20 border-t border-slate-800/50">
         <div class="max-w-6xl mx-auto px-6">
-          <SectionLabel number="04" label="Currently" />
+          <SectionLabel number="05" label="Currently" />
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
             <div class="bg-canvas p-8">

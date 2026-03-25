@@ -9,6 +9,12 @@ dist
 .env.*
 !.env.example
 
+# Personal data — fill in your own, see data/*.example.json
+data/site.json
+data/projects.json
+data/principles.json
+data/ai-tools.json
+
 # Dependencies
 node_modules
 .pnpm-store

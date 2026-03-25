@@ -1,0 +1,22 @@
+[
+  {
+    "number": "01",
+    "title": "Your first principle.",
+    "body": "Explain it in 2-3 sentences. Keep it honest and specific to how you actually work."
+  },
+  {
+    "number": "02",
+    "title": "Your second principle.",
+    "body": "Explain it in 2-3 sentences."
+  },
+  {
+    "number": "03",
+    "title": "Your third principle.",
+    "body": "Explain it in 2-3 sentences."
+  },
+  {
+    "number": "04",
+    "title": "Your fourth principle.",
+    "body": "Explain it in 2-3 sentences."
+  }
+]

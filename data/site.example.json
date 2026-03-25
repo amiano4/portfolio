@@ -1,0 +1,19 @@
+{
+  "name": "Your Name",
+  "fullName": "Your Full Name",
+  "title": "Full-Stack Developer",
+  "available": true,
+  "hero": {
+    "heading": "Your hero heading",
+    "headingAccent": "second line.",
+    "subheading": "Your sub-heading copy goes here."
+  },
+  "contact": {
+    "email": "you@example.com",
+    "github": "https://github.com/yourusername",
+    "linkedin": "https://linkedin.com/in/yourprofile"
+  },
+  "seo": {
+    "description": "Your SEO meta description."
+  }
+}

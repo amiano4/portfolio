@@ -1,6 +1,7 @@
 import projectsJson from '../../data/projects.json'
 import principlesJson from '../../data/principles.json'
 import siteJson from '../../data/site.json'
+import aiToolsJson from '../../data/ai-tools.json'
 
 export interface Project {
   slug: string
@@ -44,6 +45,14 @@ export interface Site {
   }
 }
 
+export interface AiTools {
+  primary: { name: string; type: string; description: string }
+  agents: { name: string; note: string }[]
+  models: string[]
+  editors: string[]
+}
+
 export const projects = projectsJson as Project[]
 export const principles = principlesJson as Principle[]
 export const site = siteJson as Site
+export const aiTools = aiToolsJson as AiTools

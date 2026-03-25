@@ -1,0 +1,21 @@
+[
+  {
+    "slug": "your-project-slug",
+    "title": "Your Project Title",
+    "tagline": "A short one-liner about what this project is.",
+    "role": "Full-Stack Developer",
+    "year": "2024 — Present",
+    "status": "live",
+    "company": "Company Name (optional)",
+    "problem": "What problem did this project solve?",
+    "outcome": "What changed because of the work?",
+    "stack": ["Laravel", "Vue", "MySQL"],
+    "highlights": [
+      "Key highlight one",
+      "Key highlight two",
+      "Key highlight three"
+    ],
+    "images": [],
+    "featured": true
+  }
+]

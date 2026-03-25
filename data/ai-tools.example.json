@@ -1,0 +1,19 @@
+{
+  "primary": {
+    "name": "Your Primary Agent",
+    "type": "Coding Agent",
+    "description": "Why you use it and how it fits into your daily workflow."
+  },
+  "agents": [
+    { "name": "Agent Name", "note": "What you use it for." },
+    { "name": "Agent Name", "note": "What you use it for." }
+  ],
+  "models": [
+    "Model Name",
+    "Model Name"
+  ],
+  "editors": [
+    "Cursor",
+    "VSCode"
+  ]
+}

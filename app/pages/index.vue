@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { projects, principles, site } from '~/utils/data'
+import { projects, principles, site, aiTools } from '~/utils/data'
 
 const featuredProjects = computed(() => projects.filter((p) => p.featured))
 
@@ -215,10 +215,68 @@ useSeoMeta({
       </div>
     </section>
 
+    <!-- ─── AI TOOLING ──────────────────────────────────────────────── -->
+    <section class="py-24 border-t border-slate-800/50">
+      <div class="max-w-6xl mx-auto px-6">
+        <SectionLabel number="03" label="AI Tooling" />
+
+        <!-- Primary -->
+        <div class="border border-accent/20 bg-accent/5 p-8 mb-6">
+          <div class="flex flex-wrap items-start justify-between gap-4 mb-3">
+            <div>
+              <p class="font-mono text-xs uppercase tracking-widest text-accent mb-1">Primary Agent</p>
+              <h3 class="text-2xl font-bold text-slate-100">{{ aiTools.primary.name }}</h3>
+            </div>
+            <span class="font-mono text-xs uppercase tracking-widest text-slate-600 border border-slate-800 px-3 py-1">
+              {{ aiTools.primary.type }}
+            </span>
+          </div>
+          <p class="text-slate-400 leading-relaxed">{{ aiTools.primary.description }}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
+          <!-- Other agents -->
+          <div class="bg-canvas p-6 md:col-span-1">
+            <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Also Use</p>
+            <div class="flex flex-col gap-3">
+              <div v-for="agent in aiTools.agents" :key="agent.name">
+                <p class="text-sm font-medium text-slate-200">{{ agent.name }}</p>
+                <p class="font-mono text-xs text-slate-600">{{ agent.note }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Models -->
+          <div class="bg-canvas p-6 md:col-span-1">
+            <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Models</p>
+            <div class="flex flex-col gap-2">
+              <span
+                v-for="model in aiTools.models"
+                :key="model"
+                class="text-sm text-slate-400"
+              >{{ model }}</span>
+            </div>
+          </div>
+
+          <!-- Editors -->
+          <div class="bg-canvas p-6 md:col-span-1">
+            <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Editor</p>
+            <div class="flex flex-col gap-2">
+              <span
+                v-for="editor in aiTools.editors"
+                :key="editor"
+                class="text-sm text-slate-400"
+              >{{ editor }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ─── WRITING ───────────────────────────────────────────────────── -->
     <section class="py-24 border-t border-slate-800/50">
       <div class="max-w-6xl mx-auto px-6">
-        <SectionLabel number="03" label="Writing" />
+        <SectionLabel number="04" label="Writing" />
 
         <template v-if="latestPosts && latestPosts.length > 0">
           <div class="flex flex-col gap-px bg-slate-800">
@@ -274,7 +332,7 @@ useSeoMeta({
     <!-- ─── CONTACT CTA ───────────────────────────────────────────────── -->
     <section id="contact" class="py-24 border-t border-slate-800/50">
       <div class="max-w-6xl mx-auto px-6">
-        <SectionLabel number="04" label="Let's Talk" />
+        <SectionLabel number="05" label="Let's Talk" />
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
           <!-- Left: copy -->
