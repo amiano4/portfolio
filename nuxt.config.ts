@@ -9,12 +9,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  runtimeConfig: {
-    public: {
-      siteUrl: 'https://almario.dev',
-      contactEmail: site.contact.email,
-    },
-  },
+
   app: {
     head: {
       title: site.name,

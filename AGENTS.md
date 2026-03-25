@@ -11,6 +11,7 @@ Dark, minimal personal portfolio built with Nuxt 4, Tailwind v4, and Nuxt Conten
 - `public/resume.pdf`, `public/snapshots/`, and `public/favicon.svg` are local fallbacks and are gitignored where applicable.
 - Import data via `import { site, projects, principles, aiTools } from '~/utils/data'` — `~` resolves to `app/`.
 - Dark-only design. No light mode.
+- Contact form posts to `server/api/contact.post.ts` — this file is **gitignored**. The committed example (`examples/contact.post.ts`) saves submissions to `storage/contacts.csv` and works with no configuration. Copy it to `server/api/contact.post.ts` to get started.
 
 ## Dev Server
 ```bash

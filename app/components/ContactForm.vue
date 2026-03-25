@@ -34,11 +34,15 @@ const submit = async () => {
 
   state.value = 'loading'
 
-  // Simulate a network call — replace with real endpoint later
-  await new Promise((resolve) => setTimeout(resolve, 1200))
-
-  // TODO: wire to actual API
-  state.value = 'success'
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: { ...form },
+    })
+    state.value = 'success'
+  } catch {
+    state.value = 'error'
+  }
 }
 
 const reset = () => {

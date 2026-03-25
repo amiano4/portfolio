@@ -19,6 +19,15 @@ data/ai-tools.json
 public/resume.pdf
 public/snapshots/
 
+# Private server integrations — implement your own, see *.example.ts
+server/api/contact.post.ts
+
+# Local contact form submissions
+storage/contacts.csv
+
+# Local workspace
+workspace/
+
 # Dependencies
 node_modules
 .pnpm-store
