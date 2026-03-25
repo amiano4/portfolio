@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { projects, site } from '~/utils/data'
+import { projects, site, type WorkProject, type SideProject } from '~/utils/data'
+
+const workProjects = computed(() => projects.filter(p => p.type === 'work') as WorkProject[])
+const sideProjects = computed(() => projects.filter(p => p.type === 'project') as SideProject[])
 
 useSeoMeta({
   title: 'Work',
@@ -39,7 +42,7 @@ onMounted(() => {
     <!-- Projects -->
     <div class="flex flex-col gap-8">
       <article
-        v-for="project in projects"
+        v-for="project in workProjects"
         :key="project.slug"
         :id="project.slug"
         class="border border-slate-800 hover:border-slate-600 bg-surface p-8 md:p-12 transition-colors group scroll-mt-24"
@@ -52,6 +55,7 @@ onMounted(() => {
             </span>
             <span class="text-slate-700">·</span>
             <span class="font-mono text-xs text-slate-600">{{ project.year }}</span>
+            <CollabIcon v-if="project.collab" class="text-slate-600" />
             <span v-if="project.company" class="text-slate-700">·</span>
             <span v-if="project.company" class="font-mono text-xs text-slate-600">
               {{ project.company }}
@@ -160,6 +164,49 @@ onMounted(() => {
           </div>
         </div>
       </article>
+    </div>
+
+    <!-- ─── PROJECTS ──────────────────────────────────────────────────── -->
+    <div class="mt-24 pt-20 border-t border-slate-800/50">
+      <div class="mb-12">
+        <SectionLabel number="" label="Projects" />
+        <p class="text-slate-500 text-sm mt-2 max-w-lg">{{ site.pages.work.projectsDescription }}</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-800/50">
+        <div
+          v-for="project in sideProjects"
+          :key="project.slug"
+          class="bg-canvas p-6 flex flex-col gap-4 hover:bg-surface transition-colors"
+        >
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-slate-100 leading-snug">{{ project.title }}</h3>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <CollabIcon v-if="project.collab" class="text-slate-600" />
+              <span class="font-mono text-xs text-slate-600">{{ project.year }}</span>
+            </div>
+          </div>
+          <p class="text-slate-400 text-sm leading-relaxed flex-1">{{ project.description }}</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span
+              v-for="tag in project.stack"
+              :key="tag"
+              class="font-mono text-[10px] uppercase tracking-widest text-slate-600 border border-slate-800 px-2 py-1"
+            >
+              {{ tag }}
+            </span>
+          </div>
+          <a
+            v-if="project.link"
+            :href="project.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-mono text-xs uppercase tracking-widest text-accent hover:text-white transition-colors mt-auto"
+          >
+            View Repo ↗
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

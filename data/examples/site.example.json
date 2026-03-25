@@ -35,7 +35,8 @@
   },
   "pages": {
     "work": {
-      "description": "A short description of your work page."
+      "description": "A short description of your work page.",
+      "projectsDescription": "A short description of your projects section."
     },
     "writing": {
       "heading": "Your Writing\nPage Heading.",

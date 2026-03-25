@@ -3,7 +3,8 @@ import principlesJson from '../../data/principles.json'
 import siteJson from '../../data/site.json'
 import aiToolsJson from '../../data/ai-tools.json'
 
-export interface Project {
+export interface WorkProject {
+  type: 'work'
   slug: string
   title: string
   tagline: string
@@ -17,7 +18,21 @@ export interface Project {
   highlights: string[]
   images?: string[]
   featured: boolean
+  collab?: boolean
 }
+
+export interface SideProject {
+  type: 'project'
+  slug: string
+  title: string
+  description: string
+  stack: string[]
+  year: string
+  link?: string | null
+  collab?: boolean
+}
+
+export type Project = WorkProject | SideProject
 
 export interface Principle {
   number: string
@@ -43,7 +58,7 @@ export interface Site {
     currently: { label: string; value: string; sub: string }[]
   }
   pages: {
-    work: { description: string }
+    work: { description: string; projectsDescription: string }
     writing: { heading: string; description: string }
     contact: { heading: string; headingAccent: string; description: string }
   }
