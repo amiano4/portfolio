@@ -150,10 +150,10 @@ onMounted(() => {
               class="shrink-0 group/img relative"
               @click="openLightbox(project.images!, i)"
             >
-              <img
+              <AppImage
                 :src="img"
                 :alt="`${project.title} screenshot ${i + 1}`"
-                class="h-48 w-auto border border-slate-800 object-cover object-top group-hover/img:border-slate-600 transition-colors"
+                img-class="h-48 w-auto border border-slate-800 object-cover object-top group-hover/img:border-slate-600 transition-colors"
               />
               <div class="absolute inset-0 bg-black/0 group-hover/img:bg-black/30 transition-colors flex items-center justify-center">
                 <span class="opacity-0 group-hover/img:opacity-100 transition-opacity font-mono text-xs text-white uppercase tracking-widest">

@@ -64,10 +64,11 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 
       <!-- Image -->
       <div class="max-w-3xl max-h-[85vh] mx-16 flex items-center justify-center">
-        <img
+        <AppImage
+          :key="images[current]"
           :src="images[current]"
           :alt="`${alt ?? 'Screenshot'} ${current + 1}`"
-          class="max-w-full max-h-[85vh] object-contain border border-slate-800"
+          img-class="max-w-full max-h-[85vh] object-contain border border-slate-800"
         />
       </div>
 
