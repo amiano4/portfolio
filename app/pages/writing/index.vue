@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { site } from '~/utils/data'
+
 useSeoMeta({
   title: 'Writing',
-  description: 'Opinions on engineering, delivery, AI, and the cost of moving too fast.',
+  description: site.pages.writing.description,
 })
 
 const { data: posts } = await useAsyncData('all-posts', () =>
   queryCollection('blog').order('date', 'DESC').all(),
 )
+
+const headingLines = computed(() => site.pages.writing.heading.split('\n'))
 </script>
 
 <template>
@@ -15,10 +19,12 @@ const { data: posts } = await useAsyncData('all-posts', () =>
     <div class="mb-20">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-4">Writing</p>
       <h1 class="text-5xl md:text-6xl font-bold text-slate-100 leading-tight mb-6">
-        Opinions.<br />Lessons. Process.
+        <template v-for="(line, i) in headingLines" :key="i">
+          {{ line }}<br v-if="i < headingLines.length - 1" />
+        </template>
       </h1>
       <p class="text-slate-400 max-w-xl leading-relaxed">
-        Occasional writing on software, engineering, and the things worth saying out loud.
+        {{ site.pages.writing.description }}
       </p>
     </div>
 

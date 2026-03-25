@@ -338,12 +338,11 @@ useSeoMeta({
           <!-- Left: copy -->
           <div>
             <h2 class="text-4xl md:text-5xl font-bold text-slate-100 leading-tight mb-6">
-              Open to the right<br />
-              <span class="text-accent">opportunities.</span>
+              {{ site.pages.contact.heading }}<br />
+              <span class="text-accent">{{ site.pages.contact.headingAccent }}</span>
             </h2>
             <p class="text-slate-400 leading-relaxed mb-10">
-              Remote full-time roles, freelance projects, and consulting engagements. If you have a
-              problem worth solving, let's talk about it.
+              {{ site.pages.contact.description }}
             </p>
             <div class="flex items-center gap-8">
               <a

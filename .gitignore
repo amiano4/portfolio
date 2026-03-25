@@ -15,6 +15,10 @@ data/projects.json
 data/principles.json
 data/ai-tools.json
 
+# Personal assets
+public/resume.pdf
+public/snapshots/
+
 # Dependencies
 node_modules
 .pnpm-store

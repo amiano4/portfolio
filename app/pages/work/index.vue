@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { projects } from '~/utils/data'
+import { projects, site } from '~/utils/data'
 
 useSeoMeta({
   title: 'Work',
@@ -19,10 +19,7 @@ const openLightbox = (images: string[], index: number) => {
     <div class="mb-20">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-4">Portfolio</p>
       <h1 class="text-5xl md:text-6xl font-bold text-slate-100 leading-tight mb-6">Work.</h1>
-      <p class="text-slate-400 max-w-xl leading-relaxed">
-        A mix of professional work, personal projects, and tools I've built. Some are private, some
-        are public — but all of them have a story worth reading.
-      </p>
+      <p class="text-slate-400 max-w-xl leading-relaxed">{{ site.pages.work.description }}</p>
     </div>
 
     <!-- Projects -->

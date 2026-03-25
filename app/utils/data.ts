@@ -35,6 +35,18 @@ export interface Site {
     headingAccent: string
     subheading: string
   }
+  about: {
+    intro: string
+    story: string[]
+    philosophy: string[]
+    stack: Record<string, string[]>
+    currently: { label: string; value: string; sub: string }[]
+  }
+  pages: {
+    work: { description: string }
+    writing: { heading: string; description: string }
+    contact: { heading: string; headingAccent: string; description: string }
+  }
   contact: {
     email: string
     github: string

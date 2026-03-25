@@ -8,6 +8,45 @@
     "headingAccent": "second line.",
     "subheading": "Your sub-heading copy goes here."
   },
+  "about": {
+    "intro": "One-line summary of who you are.",
+    "story": [
+      "First paragraph of your story.",
+      "Second paragraph of your story.",
+      "Third paragraph of your story."
+    ],
+    "philosophy": [
+      "First paragraph of how you think about engineering.",
+      "Second paragraph.",
+      "Third paragraph.",
+      "Fourth paragraph."
+    ],
+    "stack": {
+      "Primary — production use": ["Language", "Framework"],
+      "Also in production": ["Tool", "Service"],
+      "Tools": ["Git", "Linux"],
+      "Familiar": ["Other", "Languages"]
+    },
+    "currently": [
+      { "label": "Full-Time", "value": "Your Role", "sub": "Company, Location" },
+      { "label": "Based In", "value": "Your City", "sub": "Remote-first or on-site." },
+      { "label": "Open To", "value": "What you want", "sub": "Freelance, consulting, etc." }
+    ]
+  },
+  "pages": {
+    "work": {
+      "description": "A short description of your work page."
+    },
+    "writing": {
+      "heading": "Your Writing\nPage Heading.",
+      "description": "A short description of what you write about."
+    },
+    "contact": {
+      "heading": "Your CTA heading",
+      "headingAccent": "highlighted word.",
+      "description": "A short description of what you're open to."
+    }
+  },
   "contact": {
     "email": "you@example.com",
     "github": "https://github.com/yourusername",
