@@ -44,7 +44,7 @@ import { site } from '~/utils/data'
           download
           class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
         >
-          Résumé ↓
+          Resume
         </a>
       </div>
     </div>
