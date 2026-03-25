@@ -25,6 +25,20 @@ const openLightbox = (images: string[], index: number) => {
   lightbox.value = { images, index };
 };
 
+const getPreviewCardCount = (images: string[]) => Math.min(images.length, 4);
+
+const getPreviewCards = (images: string[]) => {
+  const visible = images.slice(0, getPreviewCardCount(images));
+
+  return visible.map((src, index) => ({
+    src,
+    counterLabel:
+      images.length >= 5 && index === visible.length - 1
+        ? `+${images.length - 3}`
+        : null,
+  }));
+};
+
 // Pulse the target card after hash scroll completes
 const route = useRoute();
 onMounted(() => {
@@ -112,141 +126,123 @@ onMounted(() => {
           </span>
         </div>
 
-        <!-- Title + tagline + image stack -->
-        <div class="flex items-start justify-between gap-8 mb-8">
+        <!-- Title + tagline — always full width -->
+        <div class="mb-8">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-slate-100 mb-3 group-hover:text-accent transition-colors"
+          >
+            {{ project.title }}
+          </h2>
+          <p class="text-slate-400 leading-relaxed text-lg">
+            {{ project.tagline }}
+          </p>
+        </div>
+
+        <!-- Content + image stack -->
+        <div
+          :class="
+            project.images?.length ? 'md:flex md:items-start md:gap-10' : ''
+          "
+        >
+          <!-- Left: content -->
           <div class="flex-1 min-w-0">
-            <h2
-              class="text-3xl md:text-4xl font-bold text-slate-100 mb-3 group-hover:text-accent transition-colors"
-            >
-              {{ project.title }}
-            </h2>
-            <p class="text-slate-400 leading-relaxed text-lg">
-              {{ project.tagline }}
-            </p>
+            <!-- Problem / Outcome -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <p
+                  class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-3"
+                >
+                  The Problem
+                </p>
+                <p class="text-slate-400 leading-relaxed text-sm">
+                  {{ project.problem }}
+                </p>
+              </div>
+              <div>
+                <p
+                  class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-3"
+                >
+                  Outcome
+                </p>
+                <p
+                  class="text-slate-400 leading-relaxed text-sm border-l-2 border-accent pl-4"
+                >
+                  {{ project.outcome }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="mb-8">
+              <p
+                class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
+              >
+                Highlights
+              </p>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <li
+                  v-for="h in project.highlights"
+                  :key="h"
+                  class="flex items-start gap-2 text-sm text-slate-400"
+                >
+                  <span class="text-accent mt-0.5 shrink-0">—</span>{{ h }}
+                </li>
+              </ul>
+            </div>
+
+            <!-- Stack -->
+            <div>
+              <p
+                class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-3"
+              >
+                Stack
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="tag in project.stack"
+                  :key="tag"
+                  class="font-mono text-xs text-slate-500 border border-slate-800 px-3 py-1"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+            </div>
           </div>
 
-          <!-- Fan image preview -->
+          <!-- Right: image stack (only if images exist) -->
           <div
             v-if="project.images?.length"
-            class="relative shrink-0 w-24 h-40 hidden md:block mt-4 me-12"
+            class="project-image-stack hidden md:block shrink-0"
           >
-            <!-- Card 4 — back right (4+ images) -->
             <button
-              v-if="project.images.length >= 4"
-              class="absolute inset-0 translate-x-6 translate-y-1 rotate-[14deg] border border-slate-700 overflow-hidden bg-slate-800"
+              v-for="(card, index) in getPreviewCards(project.images!)"
+              :key="`${project.slug}-${card.src}-${index}`"
+              class="stack-card border overflow-hidden bg-slate-800"
+              :class="
+                index === getPreviewCardCount(project.images!) - 1
+                  ? 'border-slate-500'
+                  : 'border-slate-700'
+              "
+              :style="{
+                '--stack-index': index,
+                '--stack-count': getPreviewCardCount(project.images!),
+                zIndex: index + 10,
+              }"
               @click="openLightbox(project.images!, 0)"
             >
               <AppImage
-                :src="project.images[project.images.length >= 5 ? 2 : 3]"
-                img-class="w-full h-full object-cover object-top"
-              />
-            </button>
-
-            <!-- Card 3 — back top (3+ images) -->
-            <button
-              v-if="project.images.length >= 3"
-              class="absolute inset-0 translate-x-1 -translate-y-4 rotate-[6deg] border border-slate-700 overflow-hidden bg-slate-800"
-              @click="openLightbox(project.images!, 0)"
-            >
-              <AppImage
-                :src="project.images[project.images.length >= 5 ? 1 : 2]"
-                img-class="w-full h-full object-cover object-top"
-              />
-            </button>
-
-            <!-- Card 2 — back left (2+ images) -->
-            <button
-              v-if="project.images.length >= 2"
-              class="absolute inset-0 -translate-x-5 translate-y-1 -rotate-[12deg] border border-slate-700 overflow-hidden bg-slate-800"
-              @click="openLightbox(project.images!, 0)"
-            >
-              <AppImage
-                :src="project.images[project.images.length >= 5 ? 0 : 1]"
-                img-class="w-full h-full object-cover object-top"
-              />
-            </button>
-
-            <!-- Card 1 — front center (always) -->
-            <button
-              class="absolute inset-0 rotate-[2deg] border border-slate-500 overflow-hidden bg-slate-800"
-              @click="openLightbox(project.images!, 0)"
-            >
-              <AppImage
-                :src="project.images[0]"
+                :src="card.src"
                 img-class="w-full h-full object-cover object-top"
               />
               <div
-                v-if="project.images.length >= 5"
-                class="absolute inset-0 bg-slate-900/70 flex items-center justify-center"
+                v-if="card.counterLabel"
+                class="absolute inset-0 bg-slate-900/30 flex items-center justify-center"
               >
-                <span class="text-white font-bold text-2xl"
-                  >+{{ project.images.length - 3 }}</span
-                >
+                <span class="text-white font-bold text-2xl">{{
+                  card.counterLabel
+                }}</span>
               </div>
             </button>
-          </div>
-        </div>
-
-        <!-- Problem / Outcome -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <div>
-            <p
-              class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-3"
-            >
-              The Problem
-            </p>
-            <p class="text-slate-400 leading-relaxed text-sm">
-              {{ project.problem }}
-            </p>
-          </div>
-          <div>
-            <p
-              class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-3"
-            >
-              Outcome
-            </p>
-            <p
-              class="text-slate-400 leading-relaxed text-sm border-l-2 border-accent pl-4"
-            >
-              {{ project.outcome }}
-            </p>
-          </div>
-        </div>
-
-        <!-- Highlights -->
-        <div class="mb-8">
-          <p
-            class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
-          >
-            Highlights
-          </p>
-          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <li
-              v-for="h in project.highlights"
-              :key="h"
-              class="flex items-start gap-2 text-sm text-slate-400"
-            >
-              <span class="text-accent mt-0.5 shrink-0">—</span>
-              {{ h }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- Stack -->
-        <div>
-          <p
-            class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-3"
-          >
-            Stack
-          </p>
-          <div class="flex flex-wrap gap-2">
-            <span
-              v-for="tag in project.stack"
-              :key="tag"
-              class="font-mono text-xs text-slate-500 border border-slate-800 px-3 py-1"
-            >
-              {{ tag }}
-            </span>
           </div>
         </div>
       </article>
@@ -314,3 +310,36 @@ onMounted(() => {
     @close="lightbox = null"
   />
 </template>
+
+<style scoped>
+.project-image-stack {
+  --max-cards: 4;
+  --card-width: 120px;
+  --card-height: 236px;
+  --step-x: 24px;
+  --step-y: 10px;
+  position: relative;
+  width: calc(var(--card-width) + (var(--max-cards) - 1) * var(--step-x));
+  height: calc(var(--card-height) + (var(--max-cards) - 1) * var(--step-y));
+}
+
+.stack-card {
+  position: absolute;
+  width: var(--card-width);
+  height: var(--card-height);
+  left: calc(
+    (var(--stack-index) + (var(--max-cards) - var(--stack-count))) *
+      var(--step-x)
+  );
+  top: calc((var(--stack-count) - 1 - var(--stack-index)) * var(--step-y));
+}
+
+@media (min-width: 1024px) {
+  .project-image-stack {
+    --card-width: 132px;
+    --card-height: 258px;
+    --step-x: 30px;
+    --step-y: 12px;
+  }
+}
+</style>

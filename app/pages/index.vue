@@ -1,46 +1,65 @@
 <script setup lang="ts">
-import { projects, principles, site, aiTools } from '~/utils/data'
+import { projects, principles, site, aiTools } from "~/utils/data";
 
-const featuredProjects = computed(() => projects.filter((p) => p.featured))
+const featuredProjects = computed(() => projects.filter((p) => p.featured));
 
-const { data: latestPosts } = await useAsyncData('latest-posts', () =>
-  queryCollection('blog').order('date', 'DESC').limit(2).all(),
-)
+const { data: latestPosts } = await useAsyncData("latest-posts", () =>
+  queryCollection("blog").order("date", "DESC").limit(2).all(),
+);
 
 useSeoMeta({
   title: `${site.name} — ${site.title}`,
-  description:
-    site.seo.description,
-})
+  description: site.seo.description,
+});
 </script>
 
 <template>
   <div>
     <!-- ─── HERO ──────────────────────────────────────────────────────── -->
-    <section class="relative min-h-[92vh] flex flex-col justify-center overflow-hidden">
+    <section
+      class="relative min-h-[92vh] flex flex-col justify-center overflow-hidden"
+    >
       <!-- Background glows -->
       <div class="absolute inset-0 pointer-events-none select-none">
         <div
           class="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-          style="background: radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 70%)"
+          style="
+            background: radial-gradient(
+              circle,
+              rgba(14, 165, 233, 0.07) 0%,
+              transparent 70%
+            );
+          "
         ></div>
         <div
           class="absolute top-1/4 right-0 w-[400px] h-[400px] rounded-full"
-          style="background: radial-gradient(circle, rgba(251,191,36,0.05) 0%, transparent 70%)"
+          style="
+            background: radial-gradient(
+              circle,
+              rgba(251, 191, 36, 0.05) 0%,
+              transparent 70%
+            );
+          "
         ></div>
       </div>
 
       <div class="relative z-10 max-w-6xl mx-auto px-6 py-24">
         <!-- Available badge -->
         <div class="flex items-center gap-2 mb-10">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="font-mono text-xs uppercase tracking-[0.25em] text-emerald-400">
+          <span
+            class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
+          ></span>
+          <span
+            class="font-mono text-xs uppercase tracking-[0.25em] text-emerald-400"
+          >
             Available for new opportunities
           </span>
         </div>
 
         <!-- Mono label -->
-        <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6">
+        <p
+          class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6"
+        >
           {{ site.title }}
         </p>
 
@@ -77,9 +96,15 @@ useSeoMeta({
       </div>
 
       <!-- Scroll indicator -->
-      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <span class="font-mono text-xs uppercase tracking-widest text-slate-700">Scroll</span>
-        <div class="w-px h-10 bg-gradient-to-b from-slate-700 to-transparent"></div>
+      <div
+        class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span class="font-mono text-xs uppercase tracking-widest text-slate-700"
+          >Scroll</span
+        >
+        <div
+          class="w-px h-10 bg-gradient-to-b from-slate-700 to-transparent"
+        ></div>
       </div>
     </section>
 
@@ -99,86 +124,92 @@ useSeoMeta({
             @click="navigateTo(`/work#${project.slug}`)"
             @keydown.enter="navigateTo(`/work#${project.slug}`)"
           >
-            <!-- Cover image -->
-            <div v-if="project.images?.length" class="w-full h-52 overflow-hidden border-b border-slate-800">
-              <img
-                :src="project.images[0]"
-                :alt="project.title"
-                class="w-full h-full object-cover object-top"
-              />
-            </div>
-
             <!-- Content -->
             <div class="p-8 md:p-10">
-            <!-- Meta row -->
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-              <div class="flex items-center gap-3">
-                <span class="font-mono text-xs uppercase tracking-widest text-slate-500">
-                  {{ project.role }}
-                </span>
-                <span class="text-slate-700">·</span>
-                <span class="font-mono text-xs text-slate-600">{{ project.year }}</span>
-                <span v-if="project.company" class="text-slate-700">·</span>
-                <span v-if="project.company" class="font-mono text-xs text-slate-600">
-                  {{ project.company }}
+              <!-- Meta row -->
+              <div
+                class="flex flex-wrap items-center justify-between gap-3 mb-6"
+              >
+                <div class="flex items-center gap-3">
+                  <span
+                    class="font-mono text-xs uppercase tracking-widest text-slate-500"
+                  >
+                    {{ project.role }}
+                  </span>
+                  <span class="text-slate-700">·</span>
+                  <span class="font-mono text-xs text-slate-600">{{
+                    project.year
+                  }}</span>
+                  <span v-if="project.company" class="text-slate-700">·</span>
+                  <span
+                    v-if="project.company"
+                    class="font-mono text-xs text-slate-600"
+                  >
+                    {{ project.company }}
+                  </span>
+                </div>
+                <span
+                  class="font-mono text-xs flex items-center gap-2"
+                  :class="{
+                    'text-emerald-400': project.status === 'live',
+                    'text-amber-400': project.status === 'tenure-ended',
+                    'text-slate-500': project.status === 'completed',
+                  }"
+                >
+                  <span
+                    class="w-1.5 h-1.5 rounded-full inline-block"
+                    :class="{
+                      'bg-emerald-400': project.status === 'live',
+                      'bg-amber-400': project.status === 'tenure-ended',
+                      'bg-slate-500': project.status === 'completed',
+                    }"
+                  ></span>
+                  {{
+                    project.status === "live"
+                      ? "Live"
+                      : project.status === "tenure-ended"
+                        ? "Tenure Ended"
+                        : "Completed"
+                  }}
                 </span>
               </div>
-              <span
-                class="font-mono text-xs flex items-center gap-2"
-                :class="{
-                  'text-emerald-400': project.status === 'live',
-                  'text-amber-400': project.status === 'tenure-ended',
-                  'text-slate-500': project.status === 'completed',
-                }"
+
+              <!-- Title -->
+              <h2
+                class="text-2xl md:text-3xl font-bold text-slate-100 mb-3 group-hover:text-accent transition-colors"
               >
+                {{ project.title }}
+              </h2>
+
+              <!-- Tagline -->
+              <p class="text-slate-400 mb-5 leading-relaxed">
+                {{ project.tagline }}
+              </p>
+
+              <!-- Outcome callout -->
+              <p
+                class="text-sm text-slate-400 border-l-2 border-accent pl-4 mb-7 leading-relaxed"
+              >
+                {{ project.outcome }}
+              </p>
+
+              <!-- Stack -->
+              <div class="flex flex-wrap gap-2 mb-7">
                 <span
-                  class="w-1.5 h-1.5 rounded-full inline-block"
-                  :class="{
-                    'bg-emerald-400': project.status === 'live',
-                    'bg-amber-400': project.status === 'tenure-ended',
-                    'bg-slate-500': project.status === 'completed',
-                  }"
-                ></span>
-                {{
-                  project.status === 'live'
-                    ? 'Live'
-                    : project.status === 'tenure-ended'
-                      ? 'Tenure Ended'
-                      : 'Completed'
-                }}
-              </span>
-            </div>
+                  v-for="tag in project.stack"
+                  :key="tag"
+                  class="font-mono text-xs text-slate-500 border border-slate-800 px-3 py-1"
+                >
+                  {{ tag }}
+                </span>
+              </div>
 
-            <!-- Title -->
-            <h2
-              class="text-2xl md:text-3xl font-bold text-slate-100 mb-3 group-hover:text-accent transition-colors"
-            >
-              {{ project.title }}
-            </h2>
-
-            <!-- Tagline -->
-            <p class="text-slate-400 mb-5 leading-relaxed">{{ project.tagline }}</p>
-
-            <!-- Outcome callout -->
-            <p class="text-sm text-slate-400 border-l-2 border-accent pl-4 mb-7 leading-relaxed">
-              {{ project.outcome }}
-            </p>
-
-            <!-- Stack -->
-            <div class="flex flex-wrap gap-2 mb-7">
-              <span
-                v-for="tag in project.stack"
-                :key="tag"
-                class="font-mono text-xs text-slate-500 border border-slate-800 px-3 py-1"
+              <!-- CTA hint -->
+              <p
+                class="font-mono text-xs uppercase tracking-widest text-accent flex items-center gap-2 group-hover:gap-3 transition-all"
               >
-                {{ tag }}
-              </span>
-            </div>
-
-            <!-- CTA hint -->
-            <p class="font-mono text-xs uppercase tracking-widest text-accent flex items-center gap-2 group-hover:gap-3 transition-all">
-              View full details <span>→</span>
-            </p>
+                View full details <span>→</span>
+              </p>
             </div>
           </article>
         </div>
@@ -205,8 +236,12 @@ useSeoMeta({
             :key="p.number"
             class="bg-canvas p-8 md:p-10 hover:bg-surface transition-colors group"
           >
-            <span class="font-mono text-sm text-amber mb-5 block">{{ p.number }}</span>
-            <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-accent transition-colors">
+            <span class="font-mono text-sm text-amber mb-5 block">{{
+              p.number
+            }}</span>
+            <h3
+              class="text-xl font-bold text-slate-100 mb-3 group-hover:text-accent transition-colors"
+            >
               {{ p.title }}
             </h3>
             <p class="text-slate-400 leading-relaxed text-sm">{{ p.body }}</p>
@@ -224,23 +259,39 @@ useSeoMeta({
         <div class="border border-accent/20 bg-accent/5 p-8 mb-6">
           <div class="flex flex-wrap items-start justify-between gap-4 mb-3">
             <div>
-              <p class="font-mono text-xs uppercase tracking-widest text-accent mb-1">Primary Agent</p>
-              <h3 class="text-2xl font-bold text-slate-100">{{ aiTools.primary.name }}</h3>
+              <p
+                class="font-mono text-xs uppercase tracking-widest text-accent mb-1"
+              >
+                Primary Agent
+              </p>
+              <h3 class="text-2xl font-bold text-slate-100">
+                {{ aiTools.primary.name }}
+              </h3>
             </div>
-            <span class="font-mono text-xs uppercase tracking-widest text-slate-600 border border-slate-800 px-3 py-1">
+            <span
+              class="font-mono text-xs uppercase tracking-widest text-slate-600 border border-slate-800 px-3 py-1"
+            >
               {{ aiTools.primary.type }}
             </span>
           </div>
-          <p class="text-slate-400 leading-relaxed">{{ aiTools.primary.description }}</p>
+          <p class="text-slate-400 leading-relaxed">
+            {{ aiTools.primary.description }}
+          </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
           <!-- Other agents -->
           <div class="bg-canvas p-6 md:col-span-1">
-            <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Also Use</p>
+            <p
+              class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
+            >
+              Also Use
+            </p>
             <div class="flex flex-col gap-3">
               <div v-for="agent in aiTools.agents" :key="agent.name">
-                <p class="text-sm font-medium text-slate-200">{{ agent.name }}</p>
+                <p class="text-sm font-medium text-slate-200">
+                  {{ agent.name }}
+                </p>
                 <p class="font-mono text-xs text-slate-600">{{ agent.note }}</p>
               </div>
             </div>
@@ -248,25 +299,35 @@ useSeoMeta({
 
           <!-- Models -->
           <div class="bg-canvas p-6 md:col-span-1">
-            <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Models</p>
+            <p
+              class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
+            >
+              Models
+            </p>
             <div class="flex flex-col gap-2">
               <span
                 v-for="model in aiTools.models"
                 :key="model"
                 class="text-sm text-slate-400"
-              >{{ model }}</span>
+                >{{ model }}</span
+              >
             </div>
           </div>
 
           <!-- Editors -->
           <div class="bg-canvas p-6 md:col-span-1">
-            <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Editor</p>
+            <p
+              class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
+            >
+              Editor
+            </p>
             <div class="flex flex-col gap-2">
               <span
                 v-for="editor in aiTools.editors"
                 :key="editor"
                 class="text-sm text-slate-400"
-              >{{ editor }}</span>
+                >{{ editor }}</span
+              >
             </div>
           </div>
         </div>
@@ -292,7 +353,9 @@ useSeoMeta({
                 >
                   {{ post.title }}
                 </h3>
-                <p class="text-slate-400 text-sm leading-relaxed">{{ post.description }}</p>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                  {{ post.description }}
+                </p>
                 <div class="flex flex-wrap gap-2 mt-4">
                   <span
                     v-for="tag in post.tags"
@@ -304,7 +367,9 @@ useSeoMeta({
                 </div>
               </div>
               <div class="shrink-0">
-                <span class="font-mono text-xs text-slate-600">{{ post.date }}</span>
+                <span class="font-mono text-xs text-slate-600">{{
+                  post.date
+                }}</span>
               </div>
             </NuxtLink>
           </div>
@@ -321,7 +386,9 @@ useSeoMeta({
 
         <template v-else>
           <div class="border border-slate-800 p-10 text-center">
-            <p class="font-mono text-sm text-slate-600 uppercase tracking-widest">
+            <p
+              class="font-mono text-sm text-slate-600 uppercase tracking-widest"
+            >
               First post coming soon.
             </p>
           </div>
@@ -337,9 +404,13 @@ useSeoMeta({
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
           <!-- Left: copy -->
           <div>
-            <h2 class="text-4xl md:text-5xl font-bold text-slate-100 leading-tight mb-6">
+            <h2
+              class="text-4xl md:text-5xl font-bold text-slate-100 leading-tight mb-6"
+            >
               {{ site.pages.contact.heading }}<br />
-              <span class="text-accent">{{ site.pages.contact.headingAccent }}</span>
+              <span class="text-accent">{{
+                site.pages.contact.headingAccent
+              }}</span>
             </h2>
             <p class="text-slate-400 leading-relaxed mb-10">
               {{ site.pages.contact.description }}
