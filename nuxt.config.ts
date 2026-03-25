@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      deployedAt: process.env.DEPLOYED_AT || '',
+      deployedAt: '',
     },
   },
 

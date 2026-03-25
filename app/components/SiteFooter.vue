@@ -5,10 +5,10 @@ import { site } from "~/utils/data";
 const runtimeConfig = useRuntimeConfig();
 
 const deployedAtLabel = computed(() => {
-  const deployedAt = runtimeConfig.public.deployedAt;
+  const deployedAt = runtimeConfig.public.deployedAt || "local-dev";
 
-  if (!deployedAt) {
-    return "";
+  if (deployedAt === "local-dev") {
+    return "v. local-dev";
   }
 
   const date = new Date(deployedAt);
@@ -98,7 +98,7 @@ const deployedAtLabel = computed(() => {
         </p>
         <p
           v-if="deployedAtLabel"
-          class="mt-2 font-mono text-[11px] text-slate-700 tracking-widest"
+          class="mt-2 font-mono text-[11px] text-slate-700/60 tracking-widest"
         >
           {{ deployedAtLabel }}
         </p>
