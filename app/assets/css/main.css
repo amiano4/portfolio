@@ -112,9 +112,10 @@ html {
 /* ─── Card pulse (hash scroll focus) ────────────────────────────────── */
 @keyframes card-pulse {
   0%   { box-shadow: 0 0 0 0px rgba(14, 165, 233, 0); }
-  40%  { box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.7), 0 0 50px rgba(14, 165, 233, 0.12); }
+  15%  { box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.7), 0 0 50px rgba(14, 165, 233, 0.12); }
+  65%  { box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.7), 0 0 50px rgba(14, 165, 233, 0.12); }
   100% { box-shadow: 0 0 0 0px rgba(14, 165, 233, 0); }
 }
 .card-pulse {
-  animation: card-pulse 0.9s ease-out 3;
+  animation: card-pulse 2.2s ease-out 1;
 }
