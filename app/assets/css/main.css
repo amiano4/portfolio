@@ -108,3 +108,13 @@ html {
   border-color: theme(--color-slate-800);
   margin: 2.5rem 0;
 }
+
+/* ─── Card pulse (hash scroll focus) ────────────────────────────────── */
+@keyframes card-pulse {
+  0%   { box-shadow: 0 0 0 0px rgba(14, 165, 233, 0); }
+  30%  { box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.55), 0 0 40px rgba(14, 165, 233, 0.08); }
+  100% { box-shadow: 0 0 0 0px rgba(14, 165, 233, 0); }
+}
+.card-pulse {
+  animation: card-pulse 1.6s ease-out;
+}

@@ -11,6 +11,20 @@ const lightbox = ref<{ images: string[]; index: number } | null>(null)
 const openLightbox = (images: string[], index: number) => {
   lightbox.value = { images, index }
 }
+
+// Pulse the target card after hash scroll completes
+const route = useRoute()
+onMounted(() => {
+  if (!route.hash) return
+  const slug = route.hash.slice(1)
+  // router scroll delay (400ms) + smooth scroll duration (~700ms) = ~1100ms
+  setTimeout(() => {
+    const el = document.getElementById(slug)
+    if (!el) return
+    el.classList.add('card-pulse')
+    el.addEventListener('animationend', () => el.classList.remove('card-pulse'), { once: true })
+  }, 1100)
+})
 </script>
 
 <template>
