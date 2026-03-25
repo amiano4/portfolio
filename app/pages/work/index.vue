@@ -17,13 +17,13 @@ const route = useRoute()
 onMounted(() => {
   if (!route.hash) return
   const slug = route.hash.slice(1)
-  // router scroll delay (400ms) + smooth scroll duration (~700ms) = ~1100ms
+  // router scroll delay (400ms) + smooth scroll duration (~300ms)
   setTimeout(() => {
     const el = document.getElementById(slug)
     if (!el) return
     el.classList.add('card-pulse')
     el.addEventListener('animationend', () => el.classList.remove('card-pulse'), { once: true })
-  }, 1100)
+  }, 700)
 })
 </script>
 
