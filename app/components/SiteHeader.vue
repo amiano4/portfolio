@@ -26,9 +26,12 @@ watch(
       <!-- Logo -->
       <NuxtLink
         to="/"
-        class="font-semibold text-lg text-slate-100 tracking-tight hover:text-white transition-colors"
+        class="flex items-center gap-2.5 hover:opacity-90 transition-opacity"
       >
-        {{ site.name }}<span class="text-accent">.</span>
+        <LogoMark :size="28" />
+        <span class="font-semibold text-lg text-slate-100 tracking-tight">
+          {{ site.name }}<span class="text-accent">.</span>
+        </span>
       </NuxtLink>
 
       <!-- Desktop nav -->

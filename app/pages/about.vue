@@ -12,7 +12,9 @@ useSeoMeta({
     <!-- ─── PAGE HEADER ───────────────────────────────────────────────── -->
     <div class="max-w-6xl mx-auto px-6 py-20">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-4">About</p>
-      <h1 class="text-5xl md:text-6xl font-bold text-slate-100 leading-tight mb-6">Who I am.</h1>
+      <h1 class="text-5xl md:text-6xl font-bold text-slate-100 leading-tight mb-6">
+        I'm {{ site.fullName }}.
+      </h1>
       <p class="text-slate-400 max-w-2xl leading-relaxed text-lg">
         {{ site.about.intro }}
       </p>

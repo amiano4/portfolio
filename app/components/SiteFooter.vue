@@ -7,10 +7,13 @@ import { site } from '~/utils/data'
     <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
       <!-- Left -->
       <div>
-        <p class="font-semibold text-slate-100">
-          {{ site.name }}<span class="text-accent">.</span>
-        </p>
-        <p class="font-mono text-xs text-slate-500 mt-1 uppercase tracking-widest">
+        <div class="flex items-center gap-2.5 mb-2">
+          <LogoMark :size="24" />
+          <p class="font-semibold text-slate-100">
+            {{ site.name }}<span class="text-accent">.</span>
+          </p>
+        </div>
+        <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
           {{ site.title }}
         </p>
       </div>
