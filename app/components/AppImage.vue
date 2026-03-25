@@ -9,13 +9,12 @@ const loaded = ref(false)
 const imgEl = ref<HTMLImageElement>()
 
 onMounted(() => {
-  // handle already-cached images where @load won't fire
   if (imgEl.value?.complete) loaded.value = true
 })
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative bg-slate-800/60">
     <img
       ref="imgEl"
       :src="src"
@@ -23,11 +22,6 @@ onMounted(() => {
       :class="imgClass"
       @load="loaded = true"
       @error="loaded = true"
-    />
-    <!-- Skeleton fades out once image is loaded -->
-    <div
-      class="absolute inset-0 bg-slate-800 animate-pulse transition-opacity duration-500 pointer-events-none"
-      :class="loaded ? 'opacity-0' : 'opacity-100'"
     />
   </div>
 </template>

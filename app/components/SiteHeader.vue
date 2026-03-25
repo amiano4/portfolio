@@ -40,10 +40,14 @@ watch(
           v-for="link in links"
           :key="link.to"
           :to="link.to"
-          class="font-mono text-xs uppercase tracking-widest text-slate-400 hover:text-slate-100 transition-colors"
-          :class="{ 'text-slate-100': route.path.startsWith(link.to) }"
+          class="relative flex flex-col items-center gap-1.5 font-mono text-xs uppercase tracking-widest transition-colors pb-1"
+          :class="route.path.startsWith(link.to) ? 'text-accent' : 'text-slate-400 hover:text-slate-100'"
         >
           {{ link.label }}
+          <span
+            class="absolute -bottom-0.5 left-0 right-0 h-px transition-all duration-300"
+            :class="route.path.startsWith(link.to) ? 'bg-accent opacity-100' : 'bg-transparent opacity-0'"
+          />
         </NuxtLink>
         <a
           :href="site.assets.resume"
@@ -101,7 +105,8 @@ watch(
         v-for="link in links"
         :key="link.to"
         :to="link.to"
-        class="font-mono text-sm uppercase tracking-widest text-slate-400 hover:text-slate-100 transition-colors"
+        class="font-mono text-sm uppercase tracking-widest transition-colors"
+        :class="route.path.startsWith(link.to) ? 'text-accent' : 'text-slate-400 hover:text-slate-100'"
       >
         {{ link.label }}
       </NuxtLink>
