@@ -306,6 +306,12 @@ useSeoMeta({
                 LinkedIn ↗
               </a>
               <a
+                href="mailto:almariomiano@gmail.com"
+                class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
+              >
+                Email ↗
+              </a>
+              <a
                 href="/resume.pdf"
                 download
                 class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
