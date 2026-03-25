@@ -372,7 +372,7 @@ useSeoMeta({
                 download
                 class="font-mono text-xs uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors"
               >
-                Resume
+                Resume ↓
               </a>
             </div>
           </div>

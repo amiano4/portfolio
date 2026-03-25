@@ -47,7 +47,7 @@ watch(
           download
           class="font-mono text-xs uppercase tracking-widest text-slate-400 hover:text-slate-100 transition-colors"
         >
-          Resume
+          Resume ↓
         </a>
         <NuxtLink
           to="/#contact"
@@ -106,7 +106,7 @@ watch(
         download
         class="font-mono text-sm uppercase tracking-widest text-slate-400"
       >
-        Resume
+        Resume ↓
       </a>
       <NuxtLink
         to="/#contact"
