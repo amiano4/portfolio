@@ -6,12 +6,15 @@ import {
   type SideProject,
 } from "~/utils/data";
 
+const route = useRoute();
+
 const workProjects = computed(
   () => projects.filter((p) => p.type === "work") as WorkProject[],
 );
 const sideProjects = computed(
   () => projects.filter((p) => p.type === "project") as SideProject[],
 );
+const hasHashNavigation = computed(() => Boolean(route.hash));
 
 useSeoMeta({
   title: "Work",
@@ -41,7 +44,6 @@ const getPreviewCards = (images: string[]) => {
 };
 
 // Pulse the target card after hash scroll completes
-const route = useRoute();
 onMounted(() => {
   if (!route.hash) return;
   const slug = route.hash.slice(1);
@@ -81,8 +83,8 @@ onMounted(() => {
       <article
         v-for="(project, index) in workProjects"
         :key="project.slug"
-        data-reveal
-        :data-reveal-delay="index * 80"
+        :data-reveal="hasHashNavigation ? null : ''"
+        :data-reveal-delay="hasHashNavigation ? null : index * 80"
         :id="project.slug"
         class="border border-slate-800 hover:border-slate-600 bg-surface/50 backdrop-blur-md hover:bg-surface/70 relative z-10 p-8 md:p-12 transition-colors group scroll-mt-24"
       >

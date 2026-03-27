@@ -23,6 +23,11 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+body {
+  background: transparent;
 }
 
 /* Nuxt Content prose */
@@ -143,19 +148,21 @@ html {
 }
 
 /* ─── Page transition ────────────────────────────────────────────────── */
-.page-enter-active,
+/* Fade old page out first, then bring new page in — avoids the home hero
+   showing the next page underneath during leave. */
+.page-enter-active {
+  transition: opacity 0.14s ease 0.12s;
+}
 .page-leave-active {
-  transition: opacity 0.18s ease;
+  transition: opacity 0.12s ease;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  pointer-events: none;
 }
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
-}
-/* Leaving page overlays so layout doesn't jump during cross-fade */
-.page-leave-active {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
 }
 
 /* ─── Card pulse (hash scroll focus) ────────────────────────────────── */

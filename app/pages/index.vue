@@ -4,7 +4,25 @@ import { projects, principles, site, aiTools } from "~/utils/data";
 const featuredProjects = computed(() => projects.filter((p) => p.featured));
 
 const heroEl = ref<HTMLElement | null>(null)
-onMounted(() => nextTick(() => heroEl.value?.classList.add('hero-ready')))
+
+const replayHero = () => {
+  const el = heroEl.value
+  if (!el) return
+  el.classList.remove('hero-ready')
+  // force reset so the stagger can replay on every visit
+  void el.offsetHeight
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      el.classList.add('hero-ready')
+    })
+  })
+}
+
+onMounted(() => nextTick(replayHero))
+onBeforeRouteLeave(() => {
+  heroEl.value?.classList.remove('hero-ready')
+})
+
 useScrollReveal()
 
 const { data: latestPosts } = await useAsyncData("latest-posts", () =>
