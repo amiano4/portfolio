@@ -1,38 +1,49 @@
 # Portfolio
 
-A dark, minimal, content-focused personal portfolio built with Nuxt 4. Designed to be forkable — all personal content lives in local JSON files that are never committed.
+Dark, motion-rich personal portfolio built with **Nuxt 4**, **Tailwind v4**, and **Nuxt Content**. Personal content is driven by local JSON files and optional external asset URLs so the project stays forkable.
 
 ---
 
+## Current features
+
+- home / about / work / writing pages
+- markdown blog posts via Nuxt Content
+- contact form API endpoint
+- cursor trail + ambient background motion
+- glass / backdrop-blur card treatment
+- route-level page reveal animations (no global page fade)
+- SEO layer with canonical / OG / Twitter metadata
+- structured data (`WebSite`, `Person`, `ProfilePage`, `AboutPage`, `CollectionPage`, `Article`)
+- generated `robots.txt` and `sitemap.xml`
+
 ## Stack
 
-- **Nuxt 4** — framework
-- **Tailwind CSS v4** — styling via `@theme` tokens
-- **Nuxt Content** — blog posts (Markdown)
-- **pnpm** — package manager
+- **Nuxt 4**
+- **Tailwind CSS v4**
+- **Nuxt Content**
+- **pnpm**
 
-## Project Structure
+## Project structure
 
-```
+```text
 app/
-  assets/css/        # Tailwind + global styles
-  components/        # SiteHeader, SiteFooter, ContactForm, ImageLightbox, LogoMark, SectionLabel
-  layouts/           # default.vue
-  pages/             # index, work, about, writing/[slug]
-  utils/data.ts      # Types + re-exports from data/*.json
+  assets/css/          # global styles, motion, transitions
+  components/          # header, footer, contact form, cursor/background FX, lightbox
+  composables/         # SEO helper, reveal logic
+  layouts/             # default layout
+  pages/               # index, work, about, writing/[slug]
+  utils/data.ts        # types + data re-exports
+server/
+  api/                 # contact form endpoint (local/private implementation)
+  routes/              # robots.txt, sitemap.xml
+data/                  # local content source
 content/
-  blog/              # Markdown blog posts
-data/                # gitignored — personal content lives here
-  examples/          # Template files — copy and rename to set up
-public/
-  favicon.svg
-  resume.pdf         # gitignored — add your own
-  snapshots/         # gitignored — add your own project screenshots
+  blog/                # markdown posts
 ```
 
 ## Setup
 
-### 1. Clone & install
+### 1. Install
 
 ```bash
 git clone https://github.com/amiano4/portfolio.git
@@ -42,7 +53,7 @@ pnpm install
 
 ### 2. Fill in your data
 
-Copy the example files and fill in your own content:
+Copy the example files and customize them:
 
 ```bash
 cp data/examples/site.json data/site.json
@@ -51,43 +62,67 @@ cp data/examples/principles.json data/principles.json
 cp data/examples/ai-tools.json data/ai-tools.json
 ```
 
-All personal content — name, bio, projects, stack, social links, copy — is driven by these files. No TypeScript knowledge required to customize.
-
-| File | What it controls |
+| File | Controls |
 |---|---|
-| `data/site.json` | Name, hero copy, about page, page descriptions, contact links |
-| `data/projects.json` | Work page — all project entries |
-| `data/principles.json` | "How I Work" section on the home page |
-| `data/ai-tools.json` | AI tooling section on home + about pages |
+| `data/site.json` | branding, hero copy, about page, contact info, SEO config |
+| `data/projects.json` | work page entries + featured projects |
+| `data/principles.json` | “How I Work” section |
+| `data/ai-tools.json` | AI tooling sections |
 
-### 3. Add your assets
+### 3. Assets
 
-Asset URLs are configured in `data/site.json` and `data/projects.json` — they can point anywhere.
+Asset URLs are **data-driven** and can point to your own CDN / R2 / external host.
 
-**Resume** — set the URL in `data/site.json`:
+#### Resume
+
 ```json
 "assets": {
   "resume": "https://your-cdn.com/resume.pdf"
 }
 ```
-Or drop a local file and keep the default `/resume.pdf` path (gitignored).
 
-**Favicon** — optional. If set, overrides the default `/favicon.svg`:
+#### Optional logo / favicon
+
+The app supports them if you provide URLs in `data/site.json`, but does **not** ship tracked logo or favicon fallback assets.
+
 ```json
 "assets": {
+  "logo": "https://your-cdn.com/logo.svg",
   "favicon": "https://your-cdn.com/favicon.svg"
 }
 ```
 
-**Project screenshots** — set full URLs directly in the `images` array of each project in `data/projects.json`:
+If omitted:
+- logo falls back to text branding
+- favicon link is not injected
+
+#### Project screenshots
+
 ```json
 "images": [
-  "https://your-cdn.com/snapshots/project/01.png"
+  "https://your-cdn.com/snapshots/project-01.png"
 ]
 ```
-Or use local files under `public/snapshots/[slug]/` (gitignored).
 
-### 4. Run
+Use externally hosted image URLs so the template stays clean and reusable.
+
+### 4. Social preview images
+
+Page-level OG images are configured in `data/site.json`:
+
+```json
+"seo": {
+  "siteUrl": "https://your-domain.com",
+  "images": {
+    "home": "https://your-cdn.com/og/home.png",
+    "about": "https://your-cdn.com/og/about.png",
+    "work": "https://your-cdn.com/og/work.png",
+    "writing": "https://your-cdn.com/og/writing.png"
+  }
+}
+```
+
+### 5. Run
 
 ```bash
 pnpm dev
@@ -95,38 +130,74 @@ pnpm dev
 
 ## Writing
 
-Blog posts go in `content/blog/`. Each post needs frontmatter:
+Create blog posts under:
+
+```text
+content/blog/
+```
+
+Each post needs frontmatter like:
 
 ```md
 ---
 title: Your Post Title
 date: 2026-01-01
-description: A short summary shown in the writing index.
+description: Short summary for index and SEO
+tags:
+  - Nuxt
+  - TypeScript
 ---
 
 Your content here.
 ```
 
-## Design Tokens
+## SEO
 
-Defined in `app/assets/css/main.css` via Tailwind v4 `@theme`:
+Current SEO setup includes:
 
-| Token | Value | Usage |
-|---|---|---|
-| `bg-canvas` | `#080C14` | Page background |
-| `bg-surface` | `#0c1221` | Card/section background |
-| `bg-elevated` | `#111827` | Elevated surfaces |
-| `text-accent` | `#0EA5E9` | Primary accent (electric blue) |
-| `text-amber` | `#FBBF24` | Secondary accent |
+- `usePageSeo()` helper for page metadata
+- canonical URLs
+- Open Graph / Twitter metadata
+- per-page social image support
+- global `WebSite` + `Person` schema
+- page/article JSON-LD
+- `/robots.txt`
+- `/sitemap.xml`
 
-Fonts: **Space Grotesk** (headings), **JetBrains Mono** (mono/labels), **Inter** (body) — loaded via Google Fonts.
+Make sure `data/site.json > seo.siteUrl` matches production.
+
+## Type checking
+
+```bash
+pnpm exec nuxi typecheck
+```
+
+## Design tokens
+
+Defined in `app/assets/css/main.css`:
+
+| Token | Value |
+|---|---|
+| canvas | `#080C14` |
+| surface | `#0C1221` |
+| elevated | `#111927` |
+| accent | `#0EA5E9` |
+| accent dim | `#0284C7` |
+| amber | `#FBBF24` |
+
+Fonts:
+- **Space Grotesk**
+- **JetBrains Mono**
+- **Inter**
 
 ## Deployment
 
 ```bash
-# Static
+# static
 pnpm generate
 
-# SSR (Vercel, Render, etc.)
+# SSR
 pnpm build
 ```
+
+For deployment, provide your production env vars and asset URLs through your hosting platform / runtime configuration.
