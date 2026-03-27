@@ -30,7 +30,7 @@ const { data: latestPosts } = await useAsyncData("latest-posts", () =>
 );
 
 useSeoMeta({
-  title: `${site.name} — ${site.title}`,
+  title: site.title,
   description: site.seo.description,
 });
 </script>

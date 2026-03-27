@@ -17,15 +17,17 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: site.name,
-      titleTemplate: `%s · ${site.name}`,
+      title: site.fullName,
+      titleTemplate: `%s · ${site.fullName}`,
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#080C14' },
         { name: 'description', content: site.seo.description },
       ],
       link: [
-        { rel: 'icon', type: 'image/svg+xml', href: site.assets?.favicon ?? '/favicon.svg' },
+        ...(site.assets?.favicon
+          ? [{ rel: 'icon', type: 'image/svg+xml', href: site.assets.favicon }]
+          : []),
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {
           rel: 'preconnect',

@@ -41,7 +41,6 @@ export interface Principle {
 }
 
 export interface Site {
-  name: string
   fullName: string
   title: string
   available: boolean
@@ -65,6 +64,7 @@ export interface Site {
   assets: {
     resume: string
     favicon?: string
+    logo?: string
     repo?: string
   }
   contact: {

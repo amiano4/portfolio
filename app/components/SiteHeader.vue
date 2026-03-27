@@ -26,11 +26,17 @@ watch(
       <!-- Logo -->
       <NuxtLink
         to="/"
+        :aria-label="site.fullName"
         class="flex items-center gap-2.5 hover:opacity-90 transition-opacity"
       >
-        <LogoMark :size="28" />
-        <span class="font-semibold text-lg text-slate-100 tracking-tight">
-          {{ site.name }}<span class="text-accent">.</span>
+        <img
+          v-if="site.assets.logo"
+          :src="site.assets.logo"
+          :alt="`${site.fullName} logo`"
+          class="h-7 w-auto shrink-0"
+        />
+        <span class="font-mono text-[15px] text-slate-100 tracking-[0.08em] uppercase">
+          {{ site.fullName }}
         </span>
       </NuxtLink>
 

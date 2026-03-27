@@ -43,9 +43,14 @@ const deployedAtLabel = computed(() => {
       <!-- Left -->
       <div>
         <div class="flex items-center gap-2.5 mb-2">
-          <LogoMark :size="24" />
-          <p class="font-semibold text-slate-100">
-            {{ site.name }}<span class="text-accent">.</span>
+          <img
+            v-if="site.assets.logo"
+            :src="site.assets.logo"
+            :alt="`${site.fullName} logo`"
+            class="h-6 w-auto shrink-0"
+          />
+          <p class="font-mono text-sm text-slate-100 tracking-[0.08em] uppercase">
+            {{ site.fullName }}
           </p>
         </div>
         <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
