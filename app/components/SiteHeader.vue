@@ -20,7 +20,7 @@ watch(
 
 <template>
   <header
-    class="fixed top-0 left-0 right-0 z-50 border-b border-slate-800/60 bg-canvas/90 backdrop-blur-md"
+    class="fixed top-0 left-0 right-0 z-50 border-b border-slate-800/50 bg-canvas/35 backdrop-blur-xl"
   >
     <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
       <!-- Logo -->
@@ -99,7 +99,7 @@ watch(
     <!-- Mobile menu -->
     <div
       v-if="isMenuOpen"
-      class="md:hidden border-t border-slate-800 bg-canvas px-6 py-6 flex flex-col gap-5"
+      class="md:hidden border-t border-slate-800/50 bg-canvas/45 backdrop-blur-xl px-6 py-6 flex flex-col gap-5"
     >
       <NuxtLink
         v-for="link in links"

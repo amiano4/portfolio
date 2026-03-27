@@ -60,7 +60,7 @@ const reset = () => {
 
 <template>
   <!-- Success state -->
-  <div v-if="state === 'success'" class="border border-slate-800 p-10 flex flex-col items-start gap-5">
+  <div v-if="state === 'success'" class="border border-slate-800 bg-canvas/50 backdrop-blur-md relative z-10 p-10 flex flex-col items-start gap-5">
     <div class="flex items-center gap-3">
       <span class="w-8 h-8 rounded-full bg-emerald-400/10 flex items-center justify-center shrink-0">
         <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -81,7 +81,7 @@ const reset = () => {
   </div>
 
   <!-- Form -->
-  <form v-else class="flex flex-col gap-6" @submit.prevent="submit" novalidate>
+  <form v-else class="border border-slate-800/60 bg-canvas/40 backdrop-blur-md relative z-10 p-8 flex flex-col gap-6" @submit.prevent="submit" novalidate>
     <!-- Name + Email row -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Name -->
@@ -94,7 +94,7 @@ const reset = () => {
           type="text"
           placeholder="Your name"
           autocomplete="name"
-          class="bg-surface border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors"
+          class="bg-canvas/40 backdrop-blur-sm border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors"
           :class="errors.name ? 'border-red-500/60 focus:border-red-400' : 'border-slate-800 focus:border-accent'"
         />
         <p v-if="errors.name" class="font-mono text-xs text-red-400">{{ errors.name }}</p>
@@ -110,7 +110,7 @@ const reset = () => {
           type="email"
           placeholder="your@email.com"
           autocomplete="email"
-          class="bg-surface border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors"
+          class="bg-canvas/40 backdrop-blur-sm border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors"
           :class="errors.email ? 'border-red-500/60 focus:border-red-400' : 'border-slate-800 focus:border-accent'"
         />
         <p v-if="errors.email" class="font-mono text-xs text-red-400">{{ errors.email }}</p>
@@ -126,7 +126,7 @@ const reset = () => {
         v-model="form.subject"
         type="text"
         placeholder="What's this about?"
-        class="bg-surface border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors"
+        class="bg-canvas/40 backdrop-blur-sm border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors"
         :class="errors.subject ? 'border-red-500/60 focus:border-red-400' : 'border-slate-800 focus:border-accent'"
       />
       <p v-if="errors.subject" class="font-mono text-xs text-red-400">{{ errors.subject }}</p>
@@ -141,7 +141,7 @@ const reset = () => {
         v-model="form.message"
         rows="5"
         placeholder="What's on your mind?"
-        class="bg-surface border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors resize-none"
+        class="bg-canvas/40 backdrop-blur-sm border px-4 py-3 text-slate-100 placeholder:text-slate-700 font-sans text-sm outline-none transition-colors resize-none"
         :class="errors.message ? 'border-red-500/60 focus:border-red-400' : 'border-slate-800 focus:border-accent'"
       />
       <p v-if="errors.message" class="font-mono text-xs text-red-400">{{ errors.message }}</p>

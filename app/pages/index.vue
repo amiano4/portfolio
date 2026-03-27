@@ -240,11 +240,11 @@ useSeoMeta({
       <div data-reveal class="max-w-6xl mx-auto px-6">
         <SectionLabel number="02" label="How I Work" />
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-800">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-800/35 relative z-10">
           <div
             v-for="p in principles"
             :key="p.number"
-            class="bg-canvas/50 backdrop-blur-sm p-8 md:p-10 hover:bg-canvas/80 relative z-10 transition-colors group"
+            class="bg-canvas/28 backdrop-blur-md p-8 md:p-10 hover:bg-canvas/45 relative z-10 transition-colors group"
           >
             <span class="font-mono text-sm text-amber mb-5 block">{{
               p.number
@@ -262,7 +262,7 @@ useSeoMeta({
 
     <!-- ─── AI TOOLING ──────────────────────────────────────────────── -->
     <section class="py-24 border-t border-slate-800/50">
-      <div data-reveal class="max-w-6xl mx-auto px-6">
+      <div data-reveal class="max-w-6xl mx-auto px-6 relative z-10">
         <SectionLabel number="03" label="AI Tooling" />
 
         <!-- Primary -->
@@ -289,9 +289,9 @@ useSeoMeta({
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800/35 relative z-10">
           <!-- Other agents -->
-          <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6 md:col-span-1">
+          <div class="bg-canvas/28 backdrop-blur-md relative z-10 p-6 md:col-span-1">
             <p
               class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
             >
@@ -308,7 +308,7 @@ useSeoMeta({
           </div>
 
           <!-- Models -->
-          <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6 md:col-span-1">
+          <div class="bg-canvas/28 backdrop-blur-md relative z-10 p-6 md:col-span-1">
             <p
               class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
             >
@@ -325,7 +325,7 @@ useSeoMeta({
           </div>
 
           <!-- Editors -->
-          <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6 md:col-span-1">
+          <div class="bg-canvas/28 backdrop-blur-md relative z-10 p-6 md:col-span-1">
             <p
               class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
             >
