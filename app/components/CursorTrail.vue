@@ -184,13 +184,13 @@ onUnmounted(() => cleanupHandlers.forEach(fn => fn()))
   <!-- Trail canvas — sits below the sprite -->
   <canvas
     ref="canvasRef"
-    class="pointer-events-none fixed inset-0 z-[9996]"
+    class="pointer-events-none fixed inset-0 z-[2]"
   />
 
   <!-- Lagged cursor sprite -->
   <div
     ref="spriteRef"
-    class="pointer-events-none fixed top-0 left-0 z-[9997] will-change-transform"
+    class="pointer-events-none fixed top-0 left-0 z-[3] will-change-transform"
   >
     <svg
       width="12"

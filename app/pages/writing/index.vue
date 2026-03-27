@@ -36,7 +36,7 @@ const headingLines = computed(() => site.pages.writing.heading.split('\n'))
           v-for="post in posts"
           :key="post.path"
           :to="post.path"
-          class="bg-canvas hover:bg-surface transition-colors p-8 md:p-10 group flex flex-col md:flex-row md:items-start md:justify-between gap-6"
+          class="bg-canvas/50 backdrop-blur-sm hover:bg-canvas/80 relative z-10 transition-colors p-8 md:p-10 group flex flex-col md:flex-row md:items-start md:justify-between gap-6"
         >
           <div class="flex-1">
             <h2
@@ -63,7 +63,7 @@ const headingLines = computed(() => site.pages.writing.heading.split('\n'))
     </template>
 
     <template v-else>
-      <div data-reveal class="border border-slate-800 p-16 text-center">
+      <div data-reveal class="border border-slate-800 bg-canvas/50 backdrop-blur-sm relative z-10 p-16 text-center">
         <p class="font-mono text-xs uppercase tracking-[0.3em] text-slate-700 mb-3">
           Nothing here yet.
         </p>

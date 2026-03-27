@@ -127,7 +127,7 @@ useSeoMeta({
             :key="project.slug"
             data-reveal
             :data-reveal-delay="index * 120"
-            class="border border-slate-800 hover:border-slate-600 bg-surface transition-colors group overflow-hidden cursor-pointer"
+            class="border border-slate-800 hover:border-slate-600 bg-surface/50 backdrop-blur-md hover:bg-surface/70 relative z-10 transition-colors group overflow-hidden cursor-pointer"
             :aria-label="`View ${project.title} details`"
             role="link"
             tabindex="0"
@@ -244,7 +244,7 @@ useSeoMeta({
           <div
             v-for="p in principles"
             :key="p.number"
-            class="bg-canvas p-8 md:p-10 hover:bg-surface transition-colors group"
+            class="bg-canvas/50 backdrop-blur-sm p-8 md:p-10 hover:bg-canvas/80 relative z-10 transition-colors group"
           >
             <span class="font-mono text-sm text-amber mb-5 block">{{
               p.number
@@ -266,7 +266,7 @@ useSeoMeta({
         <SectionLabel number="03" label="AI Tooling" />
 
         <!-- Primary -->
-        <div class="border border-accent/20 bg-accent/5 p-8 mb-6">
+        <div class="border border-accent/20 bg-accent/5 backdrop-blur-md relative z-10 p-8 mb-6">
           <div class="flex flex-wrap items-start justify-between gap-4 mb-3">
             <div>
               <p
@@ -291,7 +291,7 @@ useSeoMeta({
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
           <!-- Other agents -->
-          <div class="bg-canvas p-6 md:col-span-1">
+          <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6 md:col-span-1">
             <p
               class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
             >
@@ -308,7 +308,7 @@ useSeoMeta({
           </div>
 
           <!-- Models -->
-          <div class="bg-canvas p-6 md:col-span-1">
+          <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6 md:col-span-1">
             <p
               class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
             >
@@ -325,7 +325,7 @@ useSeoMeta({
           </div>
 
           <!-- Editors -->
-          <div class="bg-canvas p-6 md:col-span-1">
+          <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6 md:col-span-1">
             <p
               class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4"
             >
@@ -355,7 +355,7 @@ useSeoMeta({
               v-for="post in latestPosts"
               :key="post.path"
               :to="post.path"
-              class="bg-canvas hover:bg-surface transition-colors p-8 group flex flex-col md:flex-row md:items-start md:justify-between gap-4"
+              class="bg-canvas/50 backdrop-blur-sm hover:bg-canvas/80 relative z-10 transition-colors p-8 group flex flex-col md:flex-row md:items-start md:justify-between gap-4"
             >
               <div class="flex-1">
                 <h3
@@ -395,7 +395,7 @@ useSeoMeta({
         </template>
 
         <template v-else>
-          <div class="border border-slate-800 p-10 text-center">
+          <div class="border border-slate-800 bg-canvas/50 backdrop-blur-sm relative z-10 p-10 text-center">
             <p
               class="font-mono text-sm text-slate-600 uppercase tracking-widest"
             >

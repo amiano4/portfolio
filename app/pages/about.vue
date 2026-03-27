@@ -68,7 +68,7 @@ useScrollReveal()
         <div data-reveal class="max-w-6xl mx-auto px-6">
           <SectionLabel number="04" label="AI Tooling" />
 
-          <div class="border border-accent/20 bg-accent/5 p-6 mb-5">
+          <div class="border border-accent/20 bg-accent/5 backdrop-blur-md relative z-10 p-6 mb-5">
             <div class="flex flex-wrap items-start justify-between gap-3 mb-2">
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest text-accent mb-1">Primary Agent</p>
@@ -82,7 +82,7 @@ useScrollReveal()
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
-            <div class="bg-canvas p-6">
+            <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6">
               <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Also Use</p>
               <div class="flex flex-col gap-3">
                 <div v-for="agent in aiTools.agents" :key="agent.name">
@@ -91,13 +91,13 @@ useScrollReveal()
                 </div>
               </div>
             </div>
-            <div class="bg-canvas p-6">
+            <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6">
               <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Models</p>
               <div class="flex flex-col gap-2">
                 <span v-for="model in aiTools.models" :key="model" class="text-sm text-slate-400">{{ model }}</span>
               </div>
             </div>
-            <div class="bg-canvas p-6">
+            <div class="bg-canvas/50 backdrop-blur-sm relative z-10 p-6">
               <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-4">Editor</p>
               <div class="flex flex-col gap-2">
                 <span v-for="editor in aiTools.editors" :key="editor" class="text-sm text-slate-400">{{ editor }}</span>
@@ -112,7 +112,7 @@ useScrollReveal()
         <div data-reveal class="max-w-6xl mx-auto px-6">
           <SectionLabel number="05" label="Currently" />
           <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
-            <div v-for="item in site.about.currently" :key="item.label" class="bg-canvas p-8">
+            <div v-for="item in site.about.currently" :key="item.label" class="bg-canvas/50 backdrop-blur-sm relative z-10 p-8">
               <p class="font-mono text-xs uppercase tracking-widest text-slate-600 mb-3">
                 {{ item.label }}
               </p>

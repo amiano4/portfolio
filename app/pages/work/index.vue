@@ -84,7 +84,7 @@ onMounted(() => {
         data-reveal
         :data-reveal-delay="index * 80"
         :id="project.slug"
-        class="border border-slate-800 hover:border-slate-600 bg-surface p-8 md:p-12 transition-colors group scroll-mt-24"
+        class="border border-slate-800 hover:border-slate-600 bg-surface/50 backdrop-blur-md hover:bg-surface/70 relative z-10 p-8 md:p-12 transition-colors group scroll-mt-24"
       >
         <!-- Meta row — full width -->
         <div class="flex flex-wrap items-center gap-3 mb-6">
@@ -268,7 +268,7 @@ onMounted(() => {
           :key="project.slug"
           data-reveal
           :data-reveal-delay="index * 50"
-          class="bg-canvas p-6 flex flex-col gap-4 hover:bg-surface transition-colors"
+          class="bg-canvas/50 backdrop-blur-sm p-6 flex flex-col gap-4 hover:bg-canvas/80 relative z-10 transition-colors"
         >
           <div class="flex items-start justify-between gap-3">
             <h3 class="font-semibold text-slate-100 leading-snug">

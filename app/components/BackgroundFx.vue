@@ -13,7 +13,7 @@ onMounted(() => {
   const ctx    = canvas.getContext('2d')!
   const dpr    = window.devicePixelRatio || 1
 
-  const GLOW_SIZE  = 800   // px diameter of the glow blob
+  const GLOW_SIZE  = 420   // px diameter of the glow blob
   const GLOW_LERP  = 0.05  // much slower than cursor trail (0.12) — feels like ambient light
   const PARTICLE_N = 60
 
@@ -99,8 +99,8 @@ onUnmounted(() => cleanupFns.forEach(fn => fn()))
       ref="glowRef"
       class="absolute rounded-full"
       :style="{
-        width:  '700px',
-        height: '700px',
+        width:  '420px',
+        height: '420px',
         background: 'radial-gradient(circle, rgba(14,165,233,0.13) 0%, transparent 70%)',
       }"
     />
