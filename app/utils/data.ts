@@ -73,7 +73,14 @@ export interface Site {
     linkedin: string
   }
   seo: {
+    siteUrl: string
     description: string
+    images: {
+      home: string
+      about: string
+      work: string
+      writing: string
+    }
   }
 }
 

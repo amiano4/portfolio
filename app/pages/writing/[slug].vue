@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { site } from '~/utils/data'
+
 const route = useRoute()
 
 const { data: post } = await useAsyncData(`post-${route.params.slug}`, () =>
@@ -11,9 +13,27 @@ if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
 
-useSeoMeta({
-  title: post.value?.title,
-  description: post.value?.description,
+usePageSeo({
+  title: post.value.title,
+  description: post.value.description,
+  path: `/writing/${route.params.slug}`,
+  image: site.seo.images.writing,
+  type: 'article',
+  schema: () => ({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.value?.title,
+    description: post.value?.description,
+    datePublished: post.value?.date,
+    author: {
+      '@id': `${site.seo.siteUrl}#person`,
+    },
+    publisher: {
+      '@id': `${site.seo.siteUrl}#website`,
+    },
+    mainEntityOfPage: `${site.seo.siteUrl}/writing/${route.params.slug}`,
+    keywords: post.value?.tags?.join(', '),
+  }),
 })
 </script>
 

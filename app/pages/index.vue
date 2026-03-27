@@ -29,9 +29,21 @@ const { data: latestPosts } = await useAsyncData("latest-posts", () =>
   queryCollection("blog").order("date", "DESC").limit(2).all(),
 );
 
-useSeoMeta({
+usePageSeo({
   title: site.title,
   description: site.seo.description,
+  path: '/',
+  image: site.seo.images.home,
+  type: 'website',
+  schema: {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    name: `${site.fullName} — ${site.title}`,
+    url: `${site.seo.siteUrl}/`,
+    mainEntity: {
+      '@id': `${site.seo.siteUrl}#person`,
+    },
+  },
 });
 </script>
 

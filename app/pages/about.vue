@@ -1,9 +1,21 @@
 <script setup lang="ts">
 import { site, aiTools } from '~/utils/data'
 
-useSeoMeta({
+usePageSeo({
   title: 'About',
   description: site.about.intro,
+  path: '/about',
+  image: site.seo.images.about,
+  type: 'profile',
+  schema: {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `About · ${site.fullName}`,
+    url: `${site.seo.siteUrl}/about`,
+    about: {
+      '@id': `${site.seo.siteUrl}#person`,
+    },
+  },
 })
 useScrollReveal()
 </script>

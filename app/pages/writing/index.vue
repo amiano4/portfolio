@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import { site } from '~/utils/data'
 
-useSeoMeta({
+usePageSeo({
   title: 'Writing',
   description: site.pages.writing.description,
+  path: '/writing',
+  image: site.seo.images.writing,
+  type: 'website',
+  schema: {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `Writing · ${site.fullName}`,
+    url: `${site.seo.siteUrl}/writing`,
+  },
 })
 useScrollReveal()
 

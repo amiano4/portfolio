@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       deployedAt: '',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || site.seo.siteUrl,
     },
   },
 

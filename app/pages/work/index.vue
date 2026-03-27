@@ -16,10 +16,19 @@ const sideProjects = computed(
 );
 const hasHashNavigation = computed(() => Boolean(route.hash));
 
-useSeoMeta({
+usePageSeo({
   title: "Work",
   description:
     "Selected projects — systems built, problems solved, outcomes delivered.",
+  path: '/work',
+  image: site.seo.images.work,
+  type: 'website',
+  schema: {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `Work · ${site.fullName}`,
+    url: `${site.seo.siteUrl}/work`,
+  },
 });
 useScrollReveal();
 
