@@ -261,14 +261,13 @@ onMounted(() => {
       </div>
 
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-800/50"
+        data-reveal
+        class="side-project-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-800/50"
       >
         <div
-          v-for="(project, index) in sideProjects"
+          v-for="project in sideProjects"
           :key="project.slug"
-          data-reveal
-          :data-reveal-delay="index * 50"
-          class="bg-canvas/50 backdrop-blur-sm p-6 flex flex-col gap-4 hover:bg-canvas/80 relative z-10 transition-colors"
+          class="side-project-tile bg-canvas/50 backdrop-blur-sm p-6 flex flex-col gap-4 hover:bg-canvas/80 relative z-10 transition-colors"
         >
           <div class="flex items-start justify-between gap-3">
             <h3 class="font-semibold text-slate-100 leading-snug">
@@ -346,5 +345,63 @@ onMounted(() => {
     --step-x: 30px;
     --step-y: 12px;
   }
+}
+
+.side-project-grid .side-project-tile {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.side-project-grid.is-revealed .side-project-tile,
+.side-project-grid.reveal-anim .side-project-tile {
+  opacity: 1;
+  transform: none;
+}
+
+/* mobile: 1 per row */
+.side-project-grid .side-project-tile:nth-child(1) { transition-delay: 0ms; }
+.side-project-grid .side-project-tile:nth-child(2) { transition-delay: 90ms; }
+.side-project-grid .side-project-tile:nth-child(3) { transition-delay: 180ms; }
+.side-project-grid .side-project-tile:nth-child(4) { transition-delay: 270ms; }
+.side-project-grid .side-project-tile:nth-child(5) { transition-delay: 360ms; }
+.side-project-grid .side-project-tile:nth-child(6) { transition-delay: 450ms; }
+.side-project-grid .side-project-tile:nth-child(7) { transition-delay: 540ms; }
+.side-project-grid .side-project-tile:nth-child(8) { transition-delay: 630ms; }
+.side-project-grid .side-project-tile:nth-child(9) { transition-delay: 720ms; }
+.side-project-grid .side-project-tile:nth-child(10) { transition-delay: 810ms; }
+.side-project-grid .side-project-tile:nth-child(11) { transition-delay: 900ms; }
+.side-project-grid .side-project-tile:nth-child(12) { transition-delay: 990ms; }
+
+/* tablet: 2 per row */
+@media (min-width: 768px) {
+  .side-project-grid .side-project-tile:nth-child(1),
+  .side-project-grid .side-project-tile:nth-child(2) { transition-delay: 0ms; }
+  .side-project-grid .side-project-tile:nth-child(3),
+  .side-project-grid .side-project-tile:nth-child(4) { transition-delay: 90ms; }
+  .side-project-grid .side-project-tile:nth-child(5),
+  .side-project-grid .side-project-tile:nth-child(6) { transition-delay: 180ms; }
+  .side-project-grid .side-project-tile:nth-child(7),
+  .side-project-grid .side-project-tile:nth-child(8) { transition-delay: 270ms; }
+  .side-project-grid .side-project-tile:nth-child(9),
+  .side-project-grid .side-project-tile:nth-child(10) { transition-delay: 360ms; }
+  .side-project-grid .side-project-tile:nth-child(11),
+  .side-project-grid .side-project-tile:nth-child(12) { transition-delay: 450ms; }
+}
+
+/* desktop: 3 per row */
+@media (min-width: 1024px) {
+  .side-project-grid .side-project-tile:nth-child(1),
+  .side-project-grid .side-project-tile:nth-child(2),
+  .side-project-grid .side-project-tile:nth-child(3) { transition-delay: 0ms; }
+  .side-project-grid .side-project-tile:nth-child(4),
+  .side-project-grid .side-project-tile:nth-child(5),
+  .side-project-grid .side-project-tile:nth-child(6) { transition-delay: 90ms; }
+  .side-project-grid .side-project-tile:nth-child(7),
+  .side-project-grid .side-project-tile:nth-child(8),
+  .side-project-grid .side-project-tile:nth-child(9) { transition-delay: 180ms; }
+  .side-project-grid .side-project-tile:nth-child(10),
+  .side-project-grid .side-project-tile:nth-child(11),
+  .side-project-grid .side-project-tile:nth-child(12) { transition-delay: 270ms; }
 }
 </style>

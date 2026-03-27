@@ -2,7 +2,11 @@
 const PAGE_ENTER_MS = 180
 
 export function useScrollReveal() {
-  onMounted(() => {
+  onMounted(async () => {
+    // Let hydration + reactive attrs (like row-based reveal delays) settle first
+    await nextTick()
+    await new Promise(requestAnimationFrame)
+
     const vh = window.innerHeight
 
     const observer = new IntersectionObserver(
