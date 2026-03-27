@@ -52,18 +52,19 @@ export function usePageSeo(input: UsePageSeoInput) {
       .filter(Boolean)
   })
 
-  useHead({
+  useHead(() => ({
     link: [
       {
         rel: 'canonical',
-        href: canonicalUrl,
+        href: canonicalUrl.value,
       },
     ],
     script: schemas.value.length
       ? [
           {
+            id: 'ld-json-page',
             type: 'application/ld+json',
-            children: JSON.stringify(
+            textContent: JSON.stringify(
               schemas.value.length === 1
                 ? schemas.value[0]
                 : {
@@ -74,7 +75,7 @@ export function usePageSeo(input: UsePageSeoInput) {
           },
         ]
       : [],
-  })
+  }))
 
   return {
     canonicalUrl,

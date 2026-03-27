@@ -1,6 +1,8 @@
 import tailwindcss from '@tailwindcss/vite'
 import site from './data/site.json'
 
+const favicon = (site.assets as { favicon?: string }).favicon
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
@@ -12,7 +14,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       deployedAt: '',
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || site.seo.siteUrl,
+      siteUrl: site.seo.siteUrl,
     },
   },
 
@@ -26,8 +28,8 @@ export default defineNuxtConfig({
         { name: 'description', content: site.seo.description },
       ],
       link: [
-        ...(site.assets?.favicon
-          ? [{ rel: 'icon', type: 'image/svg+xml', href: site.assets.favicon }]
+        ...(favicon
+          ? [{ rel: 'icon', type: 'image/svg+xml', href: favicon }]
           : []),
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {

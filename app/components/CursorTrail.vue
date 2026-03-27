@@ -87,8 +87,14 @@ onMounted(() => {
   const svgEl   = sprite.querySelector('svg')!
   const svgPath = sprite.querySelector('path')!
 
+  const resolveSprite = (key: string): { d: string; ox: number; oy: number } => {
+    const alias = ALIAS[key]
+    const resolved = PATHS[key] ?? (alias ? PATHS[alias] : undefined)
+    return resolved || PATHS.default!
+  }
+
   const applySprite = (key: string) => {
-    const resolved = PATHS[key] ?? PATHS[ALIAS[key]] ?? PATHS.default
+    const resolved = resolveSprite(key)
     svgPath.setAttribute('d', resolved.d)
     // crosshair / not-allowed look better slightly larger
     const big = (key === 'crosshair' || key === 'not-allowed')
@@ -133,7 +139,7 @@ onMounted(() => {
       applySprite(cursorKey)
     }
 
-    const { ox, oy } = PATHS[cursorKey] ?? PATHS[ALIAS[cursorKey]] ?? PATHS.default
+    const { ox, oy } = resolveSprite(cursorKey)
     sprite.style.transform = `translate(${vx + ox}px, ${vy + oy}px)`
 
     // Record trail point in document coords
@@ -142,16 +148,18 @@ onMounted(() => {
     // Prune expired points
     const cutoff = now - TRAIL_MS
     let i = 0
-    while (i < trail.length && trail[i].t < cutoff) i++
+    while (i < trail.length && (trail[i]?.t ?? Infinity) < cutoff) i++
     if (i > 0) trail.splice(0, i)
 
     // --- Draw ---
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
     for (let j = 1; j < trail.length; j++) {
-      const alpha = 1 - (now - trail[j].t) / TRAIL_MS
       const p0 = trail[j - 1]
       const p1 = trail[j]
+      if (!p0 || !p1) continue
+
+      const alpha = 1 - (now - p1.t) / TRAIL_MS
 
       // Convert doc coords → viewport for drawing
       const v0x = p0.x - window.scrollX, v0y = p0.y - window.scrollY

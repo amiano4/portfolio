@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { projects, principles, site, aiTools } from "~/utils/data";
+import { projects, principles, site, aiTools, type WorkProject } from "~/utils/data";
 
-const featuredProjects = computed(() => projects.filter((p) => p.featured));
+const featuredProjects = computed(
+  () => projects.filter((p): p is WorkProject => p.type === 'work' && p.featured),
+);
 
 const heroEl = ref<HTMLElement | null>(null)
 

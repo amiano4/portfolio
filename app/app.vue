@@ -7,8 +7,9 @@ const siteUrl = runtimeConfig.public.siteUrl || site.seo.siteUrl
 useHead({
   script: [
     {
+      id: 'ld-json-site',
       type: 'application/ld+json',
-      children: JSON.stringify({
+      textContent: JSON.stringify({
         '@context': 'https://schema.org',
         '@graph': [
           {

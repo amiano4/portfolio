@@ -10,6 +10,7 @@ const emit = defineEmits<{
 }>()
 
 const current = ref(props.initial)
+const currentImage = computed(() => props.images[current.value] ?? props.images[0] ?? '')
 
 const prev = () => {
   current.value = (current.value - 1 + props.images.length) % props.images.length
@@ -65,8 +66,8 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
       <!-- Image -->
       <div class="max-w-3xl max-h-[85vh] mx-16 flex items-center justify-center">
         <AppImage
-          :key="images[current]"
-          :src="images[current]"
+          :key="currentImage"
+          :src="currentImage"
           :alt="`${alt ?? 'Screenshot'} ${current + 1}`"
           img-class="max-w-full max-h-[85vh] object-contain border border-slate-800"
         />
