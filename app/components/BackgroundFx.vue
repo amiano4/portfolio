@@ -35,15 +35,29 @@ onMounted(() => {
   let gx = mx, gy = my
 
   // Particles — tiny drifting dots
-  interface Dot { x: number; y: number; r: number; speed: number; alpha: number; drift: number }
-  const dots: Dot[] = Array.from({ length: PARTICLE_N }, () => ({
-    x:     Math.random() * window.innerWidth,
-    y:     Math.random() * window.innerHeight,
-    r:     Math.random() * 2 + 0.5,
-    speed: Math.random() * 0.4 + 0.1,
-    alpha: Math.random() * 0.35 + 0.1,
-    drift: (Math.random() - 0.5) * 0.3,
-  }))
+  interface Dot {
+    x: number; y: number; r: number; alpha: number
+    vx: number; vy: number
+    nvx: number; nvy: number
+  }
+  const dots: Dot[] = Array.from({ length: PARTICLE_N }, () => {
+    const nvy = -(Math.random() * 0.4 + 0.1)
+    const nvx =  (Math.random() - 0.5) * 0.3
+    return {
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 2 + 0.5,
+      alpha: Math.random() * 0.35 + 0.1,
+      vx: nvx, vy: nvy,
+      nvx, nvy,
+    }
+  })
+
+  const FLOW_INJECT = 0.02  // how much scroll momentum enters the fluid field
+  const FLOW_DAMP   = 0.9   // how long the shared flow momentum coasts
+  const VISCOSITY   = 0.12  // how quickly particles return to natural drift
+  let lastScrollY   = window.scrollY
+  let flowVy        = 0
 
   const onMouseMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY }
   const onResize    = () => resize()
@@ -58,12 +72,27 @@ onMounted(() => {
     gy += (my - gy) * GLOW_LERP
     glow.style.transform = `translate(${gx - GLOW_SIZE / 2}px, ${gy - GLOW_SIZE / 2}px)`
 
-    // Drift particles upward
+    // Scroll injects momentum into a shared fluid flow field
+    const scrollDelta = window.scrollY - lastScrollY
+    lastScrollY = window.scrollY
+    flowVy += scrollDelta * FLOW_INJECT
+    flowVy *= FLOW_DAMP
+
     ctx.clearRect(0, 0, w, h)
     for (const d of dots) {
-      d.y -= d.speed
-      d.x += d.drift
-      if (d.y < -4)   { d.y = h + 4; d.x = Math.random() * w }
+      // Fluid advection: particles inherit some of the scrolling flow
+      d.vy += flowVy * (0.75 + d.r * 0.08)
+
+      // Viscous drag: smoothly return toward natural drift, no bounce
+      d.vx += (d.nvx - d.vx) * 0.04
+      d.vy += (d.nvy - d.vy) * VISCOSITY
+
+      // Integrate position
+      d.x += d.vx
+      d.y += d.vy
+
+      if (d.y < -4)    { d.y = h + 4; d.x = Math.random() * w }
+      if (d.y > h + 4) { d.y = -4;   d.x = Math.random() * w }
       if (d.x < -4)     d.x = w + 4
       if (d.x > w + 4)  d.x = -4
 
