@@ -5,5 +5,8 @@
       <slot />
     </main>
     <SiteFooter />
+    <ClientOnly>
+      <CursorTrail />
+    </ClientOnly>
   </div>
 </template>
