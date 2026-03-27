@@ -29,8 +29,13 @@ onMounted(() => {
   }
   resize()
 
-  let mx = -300, my = -300   // real mouse
-  let fx = -300, fy = -300   // follower (lerped)
+  // Cursor in VIEWPORT coords (updated by mousemove)
+  let mx = window.innerWidth  / 2
+  let my = window.innerHeight / 2
+
+  // Follower in DOCUMENT coords (lerps toward cursor + scroll)
+  let fx = mx + window.scrollX
+  let fy = my + window.scrollY
 
   interface Pt { x: number; y: number; t: number }
   const trail: Pt[] = []
@@ -38,10 +43,10 @@ onMounted(() => {
   const TRAIL_MS = 700
 
   const onMouseMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY }
-  const onResize = () => resize()
+  const onResize    = () => resize()
 
   window.addEventListener('mousemove', onMouseMove)
-  window.addEventListener('resize', onResize)
+  window.addEventListener('resize',    onResize)
 
   // Sprite SVG paths keyed by cursor type
   const PATHS: Record<string, { d: string; ox: number; oy: number }> = {
@@ -98,9 +103,15 @@ onMounted(() => {
   const loop = () => {
     const now = performance.now()
 
-    // Smooth-follow with lerp
-    fx += (mx - fx) * LERP
-    fy += (my - fy) * LERP
+    // Target in DOCUMENT coords — when page scrolls, target shifts with it
+    const targetDocX = mx + window.scrollX
+    const targetDocY = my + window.scrollY
+    fx += (targetDocX - fx) * LERP
+    fy += (targetDocY - fy) * LERP
+
+    // Convert follower back to VIEWPORT coords for display
+    const vx = fx - window.scrollX
+    const vy = fy - window.scrollY
 
     // Detect cursor under real pointer and swap sprite
     const elUnder   = document.elementFromPoint(mx, my)
@@ -123,9 +134,9 @@ onMounted(() => {
     }
 
     const { ox, oy } = PATHS[cursorKey] ?? PATHS[ALIAS[cursorKey]] ?? PATHS.default
-    sprite.style.transform = `translate(${fx + ox}px, ${fy + oy}px)`
+    sprite.style.transform = `translate(${vx + ox}px, ${vy + oy}px)`
 
-    // Record trail point
+    // Record trail point in document coords
     trail.push({ x: fx, y: fy, t: now })
 
     // Prune expired points
@@ -142,13 +153,17 @@ onMounted(() => {
       const p0 = trail[j - 1]
       const p1 = trail[j]
 
+      // Convert doc coords → viewport for drawing
+      const v0x = p0.x - window.scrollX, v0y = p0.y - window.scrollY
+      const v1x = p1.x - window.scrollX, v1y = p1.y - window.scrollY
+
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
 
       // Pass 1: soft wide glow halo
       ctx.beginPath()
-      ctx.moveTo(p0.x, p0.y)
-      ctx.lineTo(p1.x, p1.y)
+      ctx.moveTo(v0x, v0y)
+      ctx.lineTo(v1x, v1y)
       ctx.strokeStyle = `rgba(14,165,233,${alpha * 0.18})`
       ctx.lineWidth = 7
       ctx.shadowBlur = 0
@@ -156,8 +171,8 @@ onMounted(() => {
 
       // Pass 2: thin bright core with bloom
       ctx.beginPath()
-      ctx.moveTo(p0.x, p0.y)
-      ctx.lineTo(p1.x, p1.y)
+      ctx.moveTo(v0x, v0y)
+      ctx.lineTo(v1x, v1y)
       ctx.strokeStyle = `rgba(56,189,248,${alpha * 0.88})`
       ctx.lineWidth = 1.5
       ctx.shadowBlur = 10
@@ -173,7 +188,7 @@ onMounted(() => {
   cleanupHandlers = [
     () => cancelAnimationFrame(rafId),
     () => window.removeEventListener('mousemove', onMouseMove),
-    () => window.removeEventListener('resize', onResize),
+    () => window.removeEventListener('resize',    onResize),
   ]
 })
 
