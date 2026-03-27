@@ -3,6 +3,10 @@ import { projects, principles, site, aiTools } from "~/utils/data";
 
 const featuredProjects = computed(() => projects.filter((p) => p.featured));
 
+const heroEl = ref<HTMLElement | null>(null)
+onMounted(() => nextTick(() => heroEl.value?.classList.add('hero-ready')))
+useScrollReveal()
+
 const { data: latestPosts } = await useAsyncData("latest-posts", () =>
   queryCollection("blog").order("date", "DESC").limit(2).all(),
 );
@@ -17,6 +21,7 @@ useSeoMeta({
   <div>
     <!-- ─── HERO ──────────────────────────────────────────────────────── -->
     <section
+      ref="heroEl"
       class="relative min-h-[92vh] flex flex-col justify-center overflow-hidden"
     >
       <!-- Background glows -->
@@ -45,7 +50,7 @@ useSeoMeta({
 
       <div class="relative z-10 max-w-6xl mx-auto px-6 py-24">
         <!-- Available badge -->
-        <div class="flex items-center gap-2 mb-10">
+        <div class="hero-item flex items-center gap-2 mb-10" style="transition-delay: 0ms">
           <span
             class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
           ></span>
@@ -58,26 +63,28 @@ useSeoMeta({
 
         <!-- Mono label -->
         <p
-          class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6"
+          class="hero-item font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6"
+          style="transition-delay: 60ms"
         >
           {{ site.title }}
         </p>
 
         <!-- Heading -->
         <h1
-          class="text-5xl sm:text-7xl md:text-8xl font-bold leading-[1.0] tracking-tight text-slate-100 mb-8"
+          class="hero-item text-5xl sm:text-7xl md:text-8xl font-bold leading-[1.0] tracking-tight text-slate-100 mb-8"
+          style="transition-delay: 120ms"
         >
           {{ site.hero.heading }}<br />
           <span class="text-slate-400">{{ site.hero.headingAccent }}</span>
         </h1>
 
         <!-- Sub copy -->
-        <p class="text-lg text-slate-400 max-w-xl leading-relaxed mb-12">
+        <p class="hero-item text-lg text-slate-400 max-w-xl leading-relaxed mb-12" style="transition-delay: 190ms">
           {{ site.hero.subheading }}
         </p>
 
         <!-- CTAs -->
-        <div class="flex flex-wrap gap-4">
+        <div class="hero-item flex flex-wrap gap-4" style="transition-delay: 260ms">
           <NuxtLink
             to="/work"
             class="inline-flex items-center gap-2 bg-accent text-canvas font-mono text-sm uppercase tracking-widest px-7 py-3.5 hover:bg-accent-dim transition-colors"
@@ -97,7 +104,8 @@ useSeoMeta({
 
       <!-- Scroll indicator -->
       <div
-        class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        class="hero-item absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        style="transition-delay: 350ms"
       >
         <span class="font-mono text-xs uppercase tracking-widest text-slate-700"
           >Scroll</span
@@ -115,8 +123,10 @@ useSeoMeta({
 
         <div class="flex flex-col gap-5">
           <article
-            v-for="project in featuredProjects"
+            v-for="(project, index) in featuredProjects"
             :key="project.slug"
+            data-reveal
+            :data-reveal-delay="index * 120"
             class="border border-slate-800 hover:border-slate-600 bg-surface transition-colors group overflow-hidden cursor-pointer"
             :aria-label="`View ${project.title} details`"
             role="link"
@@ -227,7 +237,7 @@ useSeoMeta({
 
     <!-- ─── HOW I WORK ────────────────────────────────────────────────── -->
     <section class="py-24 border-t border-slate-800/50">
-      <div class="max-w-6xl mx-auto px-6">
+      <div data-reveal class="max-w-6xl mx-auto px-6">
         <SectionLabel number="02" label="How I Work" />
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-800">
@@ -252,7 +262,7 @@ useSeoMeta({
 
     <!-- ─── AI TOOLING ──────────────────────────────────────────────── -->
     <section class="py-24 border-t border-slate-800/50">
-      <div class="max-w-6xl mx-auto px-6">
+      <div data-reveal class="max-w-6xl mx-auto px-6">
         <SectionLabel number="03" label="AI Tooling" />
 
         <!-- Primary -->
@@ -336,7 +346,7 @@ useSeoMeta({
 
     <!-- ─── WRITING ───────────────────────────────────────────────────── -->
     <section class="py-24 border-t border-slate-800/50">
-      <div class="max-w-6xl mx-auto px-6">
+      <div data-reveal class="max-w-6xl mx-auto px-6">
         <SectionLabel number="04" label="Writing" />
 
         <template v-if="latestPosts && latestPosts.length > 0">
@@ -398,7 +408,7 @@ useSeoMeta({
 
     <!-- ─── CONTACT CTA ───────────────────────────────────────────────── -->
     <section id="contact" class="py-24 border-t border-slate-800/50">
-      <div class="max-w-6xl mx-auto px-6">
+      <div data-reveal class="max-w-6xl mx-auto px-6">
         <SectionLabel number="05" label="Let's Talk" />
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">

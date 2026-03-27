@@ -5,6 +5,7 @@ useSeoMeta({
   title: 'Writing',
   description: site.pages.writing.description,
 })
+useScrollReveal()
 
 const { data: posts } = await useAsyncData('all-posts', () =>
   queryCollection('blog').order('date', 'DESC').all(),
@@ -16,7 +17,7 @@ const headingLines = computed(() => site.pages.writing.heading.split('\n'))
 <template>
   <div class="max-w-6xl mx-auto px-6 py-20">
     <!-- Page header -->
-    <div class="mb-20">
+    <div data-reveal class="mb-20">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-4">Writing</p>
       <h1 class="text-5xl md:text-6xl font-bold text-slate-100 leading-tight mb-6">
         <template v-for="(line, i) in headingLines" :key="i">
@@ -30,7 +31,7 @@ const headingLines = computed(() => site.pages.writing.heading.split('\n'))
 
     <!-- Posts -->
     <template v-if="posts && posts.length > 0">
-      <div class="flex flex-col gap-px bg-slate-800">
+      <div data-reveal class="flex flex-col gap-px bg-slate-800">
         <NuxtLink
           v-for="post in posts"
           :key="post.path"
@@ -62,7 +63,7 @@ const headingLines = computed(() => site.pages.writing.heading.split('\n'))
     </template>
 
     <template v-else>
-      <div class="border border-slate-800 p-16 text-center">
+      <div data-reveal class="border border-slate-800 p-16 text-center">
         <p class="font-mono text-xs uppercase tracking-[0.3em] text-slate-700 mb-3">
           Nothing here yet.
         </p>

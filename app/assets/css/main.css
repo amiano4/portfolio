@@ -109,6 +109,55 @@ html {
   margin: 2.5rem 0;
 }
 
+/* ─── Scroll reveal ─────────────────────────────────────────────────── */
+
+/* Below-fold elements: revealed via IntersectionObserver */
+.will-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.will-reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* In-viewport elements: CSS animation after page enter transition */
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.reveal-anim {
+  animation: reveal-in 0.55s ease both;
+}
+
+/* ─── Hero stagger ───────────────────────────────────────────────────── */
+.hero-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.hero-ready .hero-item {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── Page transition ────────────────────────────────────────────────── */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.18s ease;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+/* Leaving page overlays so layout doesn't jump during cross-fade */
+.page-leave-active {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
 /* ─── Card pulse (hash scroll focus) ────────────────────────────────── */
 @keyframes card-pulse {
   0%   { box-shadow: 0 0 0 0px rgba(14, 165, 233, 0); }

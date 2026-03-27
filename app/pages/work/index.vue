@@ -18,6 +18,7 @@ useSeoMeta({
   description:
     "Selected projects — systems built, problems solved, outcomes delivered.",
 });
+useScrollReveal();
 
 const lightbox = ref<{ images: string[]; index: number } | null>(null);
 
@@ -61,7 +62,7 @@ onMounted(() => {
 <template>
   <div class="max-w-6xl mx-auto px-6 py-20">
     <!-- Page header -->
-    <div class="mb-20">
+    <div data-reveal class="mb-20">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-4">
         Portfolio
       </p>
@@ -78,8 +79,10 @@ onMounted(() => {
     <!-- Projects -->
     <div class="flex flex-col gap-8">
       <article
-        v-for="project in workProjects"
+        v-for="(project, index) in workProjects"
         :key="project.slug"
+        data-reveal
+        :data-reveal-delay="index * 80"
         :id="project.slug"
         class="border border-slate-800 hover:border-slate-600 bg-surface p-8 md:p-12 transition-colors group scroll-mt-24"
       >
@@ -250,7 +253,7 @@ onMounted(() => {
 
     <!-- ─── PROJECTS ──────────────────────────────────────────────────── -->
     <div class="mt-24 pt-20 border-t border-slate-800/50">
-      <div class="mb-12">
+      <div data-reveal class="mb-12">
         <SectionLabel number="" label="Projects" />
         <p class="text-slate-500 text-sm mt-2 max-w-lg">
           {{ site.pages.work.projectsDescription }}
@@ -261,8 +264,10 @@ onMounted(() => {
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-800/50"
       >
         <div
-          v-for="project in sideProjects"
+          v-for="(project, index) in sideProjects"
           :key="project.slug"
+          data-reveal
+          :data-reveal-delay="index * 50"
           class="bg-canvas p-6 flex flex-col gap-4 hover:bg-surface transition-colors"
         >
           <div class="flex items-start justify-between gap-3">

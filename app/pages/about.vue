@@ -5,12 +5,13 @@ useSeoMeta({
   title: 'About',
   description: site.about.intro,
 })
+useScrollReveal()
 </script>
 
 <template>
   <div>
     <!-- ─── PAGE HEADER ───────────────────────────────────────────────── -->
-    <div class="max-w-6xl mx-auto px-6 py-20">
+    <div data-reveal class="max-w-6xl mx-auto px-6 py-20">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-4">About</p>
       <h1 class="text-5xl md:text-6xl font-bold text-slate-100 leading-tight mb-6">Who I am.</h1>
       <p class="text-slate-400 max-w-2xl leading-relaxed text-lg">
@@ -21,7 +22,7 @@ useSeoMeta({
     <div class="border-t border-slate-800/50">
       <!-- ─── THE STORY ─────────────────────────────────────────────── -->
       <section class="py-20">
-        <div class="max-w-6xl mx-auto px-6">
+        <div data-reveal class="max-w-6xl mx-auto px-6">
           <SectionLabel number="01" label="The Story" />
           <div class="max-w-2xl space-y-5 text-slate-400 leading-relaxed">
             <p v-for="(paragraph, i) in site.about.story" :key="i">{{ paragraph }}</p>
@@ -31,7 +32,7 @@ useSeoMeta({
 
       <!-- ─── HOW I THINK ───────────────────────────────────────────── -->
       <section class="py-20 border-t border-slate-800/50">
-        <div class="max-w-6xl mx-auto px-6">
+        <div data-reveal class="max-w-6xl mx-auto px-6">
           <SectionLabel number="02" label="How I Think" />
           <div class="max-w-2xl space-y-5 text-slate-400 leading-relaxed">
             <p v-for="(paragraph, i) in site.about.philosophy" :key="i">{{ paragraph }}</p>
@@ -41,7 +42,7 @@ useSeoMeta({
 
       <!-- ─── STACK ─────────────────────────────────────────────────── -->
       <section class="py-20 border-t border-slate-800/50">
-        <div class="max-w-6xl mx-auto px-6">
+        <div data-reveal class="max-w-6xl mx-auto px-6">
           <SectionLabel number="03" label="Stack" />
           <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div v-for="(items, category) in site.about.stack" :key="category">
@@ -64,7 +65,7 @@ useSeoMeta({
 
       <!-- ─── AI TOOLING ─────────────────────────────────────────────── -->
       <section class="py-20 border-t border-slate-800/50">
-        <div class="max-w-6xl mx-auto px-6">
+        <div data-reveal class="max-w-6xl mx-auto px-6">
           <SectionLabel number="04" label="AI Tooling" />
 
           <div class="border border-accent/20 bg-accent/5 p-6 mb-5">
@@ -108,7 +109,7 @@ useSeoMeta({
 
       <!-- ─── CURRENTLY ─────────────────────────────────────────────── -->
       <section class="py-20 border-t border-slate-800/50">
-        <div class="max-w-6xl mx-auto px-6">
+        <div data-reveal class="max-w-6xl mx-auto px-6">
           <SectionLabel number="05" label="Currently" />
           <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-800">
             <div v-for="item in site.about.currently" :key="item.label" class="bg-canvas p-8">
