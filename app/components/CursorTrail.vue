@@ -43,6 +43,14 @@ onMounted(() => {
   window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('resize', onResize)
 
+  // Sprite SVG paths — arrow (default) and hand (pointer)
+  const ARROW_PATH = 'M1 1 L1 12 L4 9 L6 15 L8 14 L5.5 8.5 L10 8.5 Z'
+  const HAND_PATH  = 'M5 1 C5 0.4 5.6 0 6 0.5 L6 6 C6.4 5.5 7 5.4 7.5 5.8 C8 5.4 8.6 5.6 8.8 6.2 C9.3 5.9 10 6.2 10 7 L10 11 C10 13.2 8.2 15 6 15 L4 15 C2.3 15 1 13.7 1 12 L1 6 C1 5.4 1.6 5 2 5.4 L2 1 C2 0.4 2.6 0 3 0.5 L3 5 C3.4 4.6 4 4.6 4.4 5 L5 5 Z'
+
+  const svgPath = sprite.querySelector('path')!
+
+  let lastCursorMode = ''
+
   const loop = () => {
     const now = performance.now()
 
@@ -50,8 +58,20 @@ onMounted(() => {
     fx += (mx - fx) * LERP
     fy += (my - fy) * LERP
 
-    // Move sprite (tip of SVG arrow is at 1,1 within the viewBox)
-    sprite.style.transform = `translate(${fx - 1}px, ${fy - 1}px)`
+    // Detect cursor mode under real pointer and swap sprite
+    const elUnder = document.elementFromPoint(mx, my)
+    const cursorMode = elUnder ? window.getComputedStyle(elUnder).cursor : 'default'
+    if (cursorMode !== lastCursorMode) {
+      lastCursorMode = cursorMode
+      const isPointer = cursorMode === 'pointer'
+      svgPath.setAttribute('d', isPointer ? HAND_PATH : ARROW_PATH)
+      sprite.style.opacity = isPointer ? '0.9' : '1'
+    }
+
+    // Move sprite — arrow tip at (1,1), hand at roughly (3,0)
+    const offsetX = lastCursorMode === 'pointer' ? -3 : -1
+    const offsetY = lastCursorMode === 'pointer' ? 0 : -1
+    sprite.style.transform = `translate(${fx + offsetX}px, ${fy + offsetY}px)`
 
     // Record trail point
     trail.push({ x: fx, y: fy, t: now })
